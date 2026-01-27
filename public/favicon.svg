@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <style>
+    .line { fill: #18181B; }
+    .bg { fill: #ffffff; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #09090B; }
+      .line { fill: #FAFAFA; }
+    }
+  </style>
+  <rect class="bg" width="100" height="100" rx="20" />
+  <g transform="translate(25, 10)">
+    <!-- Left vertical bar - lengthened -->
+    <rect class="line" x="0" y="0" width="12" height="80" />
+    <!-- Right vertical bar - lengthened -->
+    <rect class="line" x="38" y="0" width="12" height="80" />
+    <!-- Middle horizontal bar with pixelated/terminal style -->
+    <rect class="line" x="12" y="34" width="26" height="12" />
+    <!-- Small notch to make it look like the reference style -->
+    <rect class="bg" x="20" y="34" width="10" height="6" />
+  </g>
+</svg>
