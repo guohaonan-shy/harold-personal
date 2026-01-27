@@ -164,10 +164,11 @@
                 {
                   "type": "text",
                   "id": "5x388",
+                  "name": "AI lowered",
                   "fill": "#EDEDED",
                   "textGrowth": "fixed-width",
                   "width": 1000,
-                  "content": "Couldn't get along with my boss, so I hired myself.",
+                  "content": "AI lowered the cost of failure,\nso I'm building things that actually matter.",
                   "lineHeight": 1.1,
                   "textAlign": "center",
                   "fontFamily": "Inter",
@@ -179,7 +180,7 @@
                   "id": "SdjFZ",
                   "opacity": 0.4,
                   "fill": "#888888",
-                  "content": "(Inspired by Marc Lou 🫡)",
+                  "content": "inspired by AI Evolution~",
                   "textAlign": "center",
                   "fontFamily": "JetBrains Mono",
                   "fontSize": 12,
@@ -751,25 +752,88 @@
                           "type": "frame",
                           "id": "S6XOz",
                           "name": "badge",
-                          "fill": "#1A1A1A",
-                          "cornerRadius": 4,
-                          "stroke": {
-                            "thickness": 1,
-                            "fill": "#262626"
-                          },
-                          "padding": [
-                            6,
-                            12
-                          ],
+                          "gap": 8,
                           "children": [
                             {
-                              "type": "text",
-                              "id": "uZD5N",
-                              "fill": "#888888",
-                              "content": "AI Education / SaaS",
-                              "fontFamily": "Inter",
-                              "fontSize": 12,
-                              "fontWeight": "bold"
+                              "type": "frame",
+                              "id": "eLuSp",
+                              "name": "tag1",
+                              "fill": "#1A1A1A",
+                              "cornerRadius": 4,
+                              "stroke": {
+                                "thickness": 1,
+                                "fill": "#262626"
+                              },
+                              "padding": [
+                                6,
+                                12
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "k44cm",
+                                  "name": "tag1text",
+                                  "fill": "#888888",
+                                  "content": "AI",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "bold"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "aIsHp",
+                              "name": "tag2",
+                              "fill": "#1A1A1A",
+                              "cornerRadius": 4,
+                              "stroke": {
+                                "thickness": 1,
+                                "fill": "#262626"
+                              },
+                              "padding": [
+                                6,
+                                12
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "D0UsN",
+                                  "name": "tag2text",
+                                  "fill": "#888888",
+                                  "content": "Education",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "bold"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "BCaEe",
+                              "name": "tag3",
+                              "fill": "#1A1A1A",
+                              "cornerRadius": 4,
+                              "stroke": {
+                                "thickness": 1,
+                                "fill": "#262626"
+                              },
+                              "padding": [
+                                6,
+                                12
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "QZxCu",
+                                  "name": "tag3text",
+                                  "fill": "#888888",
+                                  "content": "Web",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "bold"
+                                }
+                              ]
                             }
                           ]
                         },
@@ -1261,7 +1325,6 @@
           "id": "WUGAD",
           "name": "hero",
           "width": "fill_container",
-          "height": 700,
           "fill": {
             "type": "gradient",
             "gradientType": "linear",
@@ -1281,11 +1344,10 @@
               }
             ]
           },
-          "gap": 60,
+          "layout": "vertical",
+          "gap": 64,
           "padding": [
-            60,
-            120,
-            0,
+            80,
             120
           ],
           "alignItems": "center",
@@ -1296,7 +1358,8 @@
               "name": "heroText",
               "width": "fill_container",
               "layout": "vertical",
-              "gap": 24,
+              "gap": 32,
+              "alignItems": "center",
               "children": [
                 {
                   "type": "frame",
@@ -1387,23 +1450,24 @@
                   "id": "vJzv7",
                   "fill": "#1A1A1A",
                   "textGrowth": "fixed-width",
-                  "width": "fill_container",
-                  "content": "Hi, I'm Harold.",
+                  "width": 1000,
+                  "content": "AI lowered the cost of failure,\nso I'm building things that actually matter.",
                   "lineHeight": 1.1,
+                  "textAlign": "center",
                   "fontFamily": "Inter",
-                  "fontSize": 48,
+                  "fontSize": 72,
                   "fontWeight": "bold"
                 },
                 {
                   "type": "text",
                   "id": "eQDDl",
+                  "opacity": 0.4,
                   "fill": "#666666",
-                  "textGrowth": "fixed-width",
-                  "width": 500,
-                  "content": "I'm an indie hacker and full-stack developer based in the cloud. \n\nI build software that empowers other developers. My philosophy is simple: ship small, iterate fast, and keep it fun. Currently building IndieKit and exploring the future of AI tools.",
+                  "content": "inspired by AI Evolution~",
                   "lineHeight": 1.6,
-                  "fontFamily": "Inter",
-                  "fontSize": 18,
+                  "textAlign": "center",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
                   "fontWeight": "normal"
                 }
               ]
@@ -1411,21 +1475,30 @@
             {
               "type": "frame",
               "id": "gjYX2",
-              "name": "heroVisual",
+              "name": "bottomRow",
               "width": "fill_container",
-              "height": "fill_container",
-              "padding": [
-                40,
-                0
-              ],
-              "justifyContent": "center",
+              "gap": 100,
+              "justifyContent": "space_between",
               "alignItems": "center",
               "children": [
+                {
+                  "type": "text",
+                  "id": "nv8aT",
+                  "name": "desc",
+                  "fill": "#666666",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Hi, I'm Harold. Full-stack developer by day, creator by night.\n\nCurrently obsessed with making TOEFLAIR better and helping people stay healthy with Mr.Steady. I turn caffeine into AI tools and indie products.",
+                  "lineHeight": 1.6,
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "normal"
+                },
                 {
                   "type": "frame",
                   "id": "GE9Mi",
                   "name": "terminal",
-                  "rotation": -5,
+                  "rotation": 2,
                   "width": 500,
                   "fill": "#F9F9F9",
                   "cornerRadius": 12,
@@ -1792,7 +1865,7 @@
                   "id": "Rs4JN",
                   "name": "p4",
                   "fill": "#48B0BD",
-                  "content": "projects",
+                  "content": "~/projects",
                   "fontFamily": "JetBrains Mono",
                   "fontSize": 32,
                   "fontWeight": "normal"
@@ -1949,25 +2022,88 @@
                           "type": "frame",
                           "id": "UX9TP",
                           "name": "badge",
-                          "fill": "#EAEAEA",
-                          "cornerRadius": 4,
-                          "stroke": {
-                            "thickness": 1,
-                            "fill": "#E5E5E5"
-                          },
-                          "padding": [
-                            6,
-                            12
-                          ],
+                          "gap": 8,
                           "children": [
                             {
-                              "type": "text",
-                              "id": "0GzxJ",
-                              "fill": "#666666",
-                              "content": "AI Education / SaaS",
-                              "fontFamily": "Inter",
-                              "fontSize": 12,
-                              "fontWeight": "bold"
+                              "type": "frame",
+                              "id": "QYR5D",
+                              "name": "tag1",
+                              "fill": "#EAEAEA",
+                              "cornerRadius": 4,
+                              "stroke": {
+                                "thickness": 1,
+                                "fill": "#E5E5E5"
+                              },
+                              "padding": [
+                                6,
+                                12
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "LLW9L",
+                                  "name": "tag1text",
+                                  "fill": "#666666",
+                                  "content": "AI",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "bold"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "94g1Z",
+                              "name": "tag2",
+                              "fill": "#EAEAEA",
+                              "cornerRadius": 4,
+                              "stroke": {
+                                "thickness": 1,
+                                "fill": "#E5E5E5"
+                              },
+                              "padding": [
+                                6,
+                                12
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "GjZgG",
+                                  "name": "tag2text",
+                                  "fill": "#666666",
+                                  "content": "Education",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "bold"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "6A9CE",
+                              "name": "tag3",
+                              "fill": "#EAEAEA",
+                              "cornerRadius": 4,
+                              "stroke": {
+                                "thickness": 1,
+                                "fill": "#E5E5E5"
+                              },
+                              "padding": [
+                                6,
+                                12
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "QuPQt",
+                                  "name": "tag3text",
+                                  "fill": "#666666",
+                                  "content": "Web",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "bold"
+                                }
+                              ]
                             }
                           ]
                         },
@@ -2080,7 +2216,7 @@
                   "id": "FlmfZ",
                   "name": "p5",
                   "fill": "#48B0BD",
-                  "content": "upcoming",
+                  "content": "~/upcoming",
                   "fontFamily": "JetBrains Mono",
                   "fontSize": 32,
                   "fontWeight": "normal"
@@ -2166,7 +2302,7 @@
         {
           "type": "frame",
           "id": "VMeUJ",
-          "name": "footer",
+          "name": "socialSection",
           "width": "fill_container",
           "fill": {
             "type": "gradient",
@@ -2188,9 +2324,9 @@
             ]
           },
           "layout": "vertical",
-          "gap": 32,
+          "gap": 40,
           "padding": [
-            80,
+            64,
             120
           ],
           "children": [
@@ -2215,7 +2351,7 @@
                   "id": "3YlCU",
                   "name": "p6",
                   "fill": "#48B0BD",
-                  "content": "social",
+                  "content": "~/social",
                   "fontFamily": "JetBrains Mono",
                   "fontSize": 32,
                   "fontWeight": "normal"
@@ -2393,12 +2529,36 @@
                   ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "ADVZ9",
+          "name": "footerSection",
+          "width": "fill_container",
+          "fill": "#FFFFFF",
+          "stroke": {
+            "thickness": {
+              "top": 1
             },
+            "fill": "#E5E5E5"
+          },
+          "layout": "vertical",
+          "gap": 16,
+          "padding": [
+            40,
+            120
+          ],
+          "alignItems": "center",
+          "children": [
             {
               "type": "text",
-              "id": "bh1E2",
+              "id": "LzulK",
+              "name": "copyright",
               "fill": "#999999",
               "content": "© 2026 Harold. All systems operational.",
+              "textAlign": "center",
               "fontFamily": "JetBrains Mono",
               "fontSize": 12,
               "fontWeight": "normal"

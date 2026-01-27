@@ -1,4 +1,9 @@
+"use client";
+
 import { ChevronRight, Twitter, Github, ExternalLink, Mail } from "lucide-react";
+import TypewriterTitle from "./TypewriterTitle";
+
+import { motion } from "framer-motion";
 
 interface SocialLink {
   icon: React.ReactNode;
@@ -39,27 +44,30 @@ export default function Social() {
     <section className="bg-gradient-section border-t border-light">
       <div className="max-w-7xl mx-auto px-8 lg:px-[120px] py-16">
         {/* Section Title */}
-        <div className="flex items-center gap-4 mb-8 font-mono text-[32px]">
-          <ChevronRight className="w-8 h-8 text-terminal-green" />
-          <span className="text-terminal-cyan">~/social</span>
-          <span className="text-main font-bold">harold</span>
-          <span className="text-main font-bold">show --all</span>
-        </div>
+        <TypewriterTitle 
+          path="~/social"
+          user="harold"
+          command="show --all"
+        />
         
         {/* Social Links */}
         <div className="space-y-4">
           {socialLinks.map((link, index) => (
-            <a
+            <motion.a
               key={index}
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
               className="flex items-center gap-3 font-mono text-base hover:opacity-80 transition-opacity"
             >
               {link.icon}
               <span className="text-main">{link.name}</span>
               <span className="text-dim">{link.handle}</span>
-            </a>
+            </motion.a>
           ))}
         </div>
       </div>

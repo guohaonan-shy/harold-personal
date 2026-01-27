@@ -1,4 +1,9 @@
+"use client";
+
 import { ChevronRight } from "lucide-react";
+import TypewriterTitle from "./TypewriterTitle";
+
+import { motion } from "framer-motion";
 
 interface UpcomingProject {
   name: string;
@@ -16,20 +21,26 @@ export default function Upcoming() {
     <section className="bg-gradient-section border-t border-light">
       <div className="max-w-7xl mx-auto px-8 lg:px-[120px] py-16">
         {/* Section Title */}
-        <div className="flex items-center gap-4 mb-10 font-mono text-[32px]">
-          <ChevronRight className="w-8 h-8 text-terminal-green" />
-          <span className="text-terminal-cyan">~/upcoming</span>
-          <span className="text-main font-bold">harold</span>
-          <span className="text-main font-bold">--upcoming</span>
-        </div>
+        <TypewriterTitle 
+          path="~/upcoming"
+          user="harold"
+          command="--upcoming"
+        />
         
         {/* Upcoming List */}
         <div className="font-mono text-base space-y-3">
           <p className="text-dim text-sm">total 42</p>
           {upcomingProjects.map((project, index) => (
-            <p key={index} className="text-main">
+            <motion.p 
+              key={index} 
+              initial={{ opacity: 0, x: -10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="text-main"
+            >
               drwxr-xr-x  harold  {project.name.padEnd(24)} [{project.status}]
-            </p>
+            </motion.p>
           ))}
         </div>
       </div>

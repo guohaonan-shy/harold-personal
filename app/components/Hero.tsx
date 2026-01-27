@@ -28,11 +28,11 @@ export default function Hero() {
           {/* Big Heading - Spans across */}
           <div className="max-w-5xl mx-auto space-y-4">
             <h1 className="text-5xl lg:text-7xl font-bold text-main leading-[1.05] tracking-tight">
-              Couldn't get along with my boss, <br className="hidden lg:block" />
-              so I <span className="text-terminal-green italic">hired myself.</span>
+              AI lowered the <span className="text-terminal-green italic">cost of failure,</span> <br className="hidden lg:block" />
+              so I'm building things that <span className="text-terminal-green italic">actually matter.</span>
             </h1>
             <p className="text-xs font-mono text-dim opacity-40">
-              (Inspired by Marc Lou 🫡)
+              (Inspired by the AI Era 🤖)
             </p>
           </div>
         </div>
@@ -42,9 +42,9 @@ export default function Hero() {
           {/* Description - Left column */}
           <div className="flex-1">
             <p className="text-xl text-dim leading-[1.6] max-w-[550px]">
-              Hi, I'm <span className="text-main font-semibold">Harold</span>. Full-stack developer by day, creator by night.
+              Hi, I'm <span className="text-main font-semibold">Harold</span>. I believe AI should be a bridge, not a barrier. 
               <br /><br />
-              Currently obsessed with making <span className="text-terminal-cyan font-medium">TOEFLAIR</span> better and helping people stay healthy with <span className="text-terminal-green font-medium">Mr.Steady</span>. I turn caffeine into AI tools and indie products.
+              Whether it's helping seniors keep up with technology or lowering the cost of learning, I build AI-powered tools to empower everyone. Currently iterating <span className="text-terminal-cyan font-medium">TOEFLAIR</span> and crafting <span className="text-terminal-green font-medium">Mr.Steady</span>.
             </p>
           </div>
           

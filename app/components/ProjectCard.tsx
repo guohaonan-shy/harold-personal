@@ -1,16 +1,26 @@
+"use client";
+
 import { Play, ExternalLink, Sparkles } from "lucide-react";
+
+import { motion } from "framer-motion";
 
 interface ProjectCardProps {
   title: string;
   description: string;
-  badge: string;
+  tags: string[];
   filename: string;
   link?: string;
 }
 
-export default function ProjectCard({ title, description, badge, filename, link }: ProjectCardProps) {
+export default function ProjectCard({ title, description, tags, filename, link }: ProjectCardProps) {
   return (
-    <div className="rounded-2xl border border-main bg-card overflow-hidden">
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="rounded-2xl border border-main bg-card overflow-hidden"
+    >
       {/* Card Header */}
       <div className="flex items-center gap-2 h-9 px-4 border-b border-main">
         <div className="w-2.5 h-2.5 rounded-full bg-terminal-red" />
@@ -27,9 +37,16 @@ export default function ProjectCard({ title, description, badge, filename, link 
       
       {/* Info Section */}
       <div className="p-10 space-y-5 border-t border-main">
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-page dark:bg-[#1A1A1A] border border-main font-mono text-xs font-bold">
-          <span className="text-dim uppercase">{badge}</span>
+        {/* Tags */}
+        <div className="flex items-center gap-2">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-3 py-1.5 rounded bg-page dark:bg-[#1A1A1A] border border-main text-xs font-bold text-dim"
+            >
+              {tag}
+            </span>
+          ))}
         </div>
         
         {/* Title */}
@@ -38,17 +55,21 @@ export default function ProjectCard({ title, description, badge, filename, link 
         {/* Description */}
         <p className="text-base text-dim leading-[1.6]">{description}</p>
         
-        {/* Link */}
-        {link && (
-          <a 
-            href={link}
-            className="inline-flex items-center gap-2 text-main hover:underline font-bold text-sm"
-          >
-            <span>Visit Project</span>
-            <ExternalLink className="w-4 h-4" />
-          </a>
-        )}
+      {/* Link */}
+      {link && (
+        <motion.a 
+          href={link}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="inline-flex items-center gap-2 text-main hover:underline font-bold text-sm"
+        >
+          <span>Visit Project</span>
+          <ExternalLink className="w-4 h-4" />
+        </motion.a>
+      )}
       </div>
-    </div>
+    </motion.div>
   );
 }
