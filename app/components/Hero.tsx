@@ -26,15 +26,20 @@ export default function Hero() {
             </div>
             
             {/* Heading */}
-            <h1 className="text-4xl lg:text-5xl font-bold text-main leading-[1.1]">
-              Hi, I'm Harold.
-            </h1>
+            <div className="space-y-2">
+              <h1 className="text-4xl lg:text-5xl font-bold text-main leading-[1.1]">
+                Couldn't get along with my boss, so I <span className="text-terminal-green italic">hired myself.</span>
+              </h1>
+              <p className="text-[10px] font-mono text-dim opacity-50">
+                (Inspired by Marc Lou 🫡)
+              </p>
+            </div>
             
             {/* Description */}
             <p className="text-lg text-dim leading-[1.6] max-w-[500px]">
-              I'm an indie hacker and full-stack developer based in the cloud.
+              Hi, I'm <span className="text-main font-semibold">Harold</span>. Full-stack developer by day, creator by night.
               <br /><br />
-              I build software that empowers other developers. My philosophy is simple: ship small, iterate fast, and keep it fun. Currently building IndieKit and exploring the future of AI tools.
+              Currently obsessed with making <span className="text-terminal-cyan font-medium">TOEFLAIR</span> better and helping people stay healthy with <span className="text-terminal-green font-medium">Mr.Steady</span>. I turn caffeine into AI tools and indie products.
             </p>
           </div>
           
