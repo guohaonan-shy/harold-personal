@@ -16,7 +16,7 @@ export default function ProjectCard({ title, description, badge, filename, link 
         <div className="w-2.5 h-2.5 rounded-full bg-terminal-red" />
         <div className="w-2.5 h-2.5 rounded-full bg-terminal-yellow" />
         <div className="w-2.5 h-2.5 rounded-full bg-terminal-green" />
-        <span className="ml-2 text-xs font-mono text-dim">{filename}</span>
+        <span className="ml-2 text-xs font-mono text-dim">~/projects/{filename}</span>
       </div>
       
       {/* Visual Placeholder */}
@@ -28,9 +28,8 @@ export default function ProjectCard({ title, description, badge, filename, link 
       {/* Info Section */}
       <div className="p-10 space-y-5 border-t border-main">
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-page dark:bg-[#1A1A1A] border border-main font-mono text-xs">
-          <Sparkles className="w-3 h-3 text-terminal-cyan" />
-          <span className="text-dim">{badge}</span>
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-page dark:bg-[#1A1A1A] border border-main font-mono text-xs font-bold">
+          <span className="text-dim uppercase">{badge}</span>
         </div>
         
         {/* Title */}
@@ -43,10 +42,10 @@ export default function ProjectCard({ title, description, badge, filename, link 
         {link && (
           <a 
             href={link}
-            className="inline-flex items-center gap-2 text-terminal-cyan hover:underline font-mono text-sm"
+            className="inline-flex items-center gap-2 text-main hover:underline font-bold text-sm"
           >
+            <span>Visit Project</span>
             <ExternalLink className="w-4 h-4" />
-            <span>View Project</span>
           </a>
         )}
       </div>

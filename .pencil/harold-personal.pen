@@ -594,7 +594,7 @@
                   "id": "GkgRn",
                   "name": "p4",
                   "fill": "#48B0BD",
-                  "content": "projects",
+                  "content": "~/projects",
                   "fontFamily": "JetBrains Mono",
                   "fontSize": 32,
                   "fontWeight": "normal"
@@ -695,7 +695,7 @@
                           "type": "text",
                           "id": "iabuD",
                           "fill": "$text_dim",
-                          "content": "toeflair.exe",
+                          "content": "~/projects/toeflair.exe",
                           "fontFamily": "JetBrains Mono",
                           "fontSize": 12,
                           "fontWeight": "normal"
@@ -888,7 +888,7 @@
                   "id": "y1wWr",
                   "name": "p5",
                   "fill": "#48B0BD",
-                  "content": "upcoming",
+                  "content": "~/upcoming",
                   "fontFamily": "JetBrains Mono",
                   "fontSize": 32,
                   "fontWeight": "normal"
@@ -973,8 +973,8 @@
         },
         {
           "type": "frame",
-          "id": "D3ygk",
-          "name": "footer",
+          "id": "W7GTt",
+          "name": "socialSection",
           "width": "fill_container",
           "fill": {
             "type": "gradient",
@@ -1002,9 +1002,9 @@
             "fill": "#333333"
           },
           "layout": "vertical",
-          "gap": 32,
+          "gap": 40,
           "padding": [
-            80,
+            64,
             120
           ],
           "children": [
@@ -1029,7 +1029,7 @@
                   "id": "i9DKC",
                   "name": "p6",
                   "fill": "#48B0BD",
-                  "content": "social",
+                  "content": "~/social",
                   "fontFamily": "JetBrains Mono",
                   "fontSize": 32,
                   "fontWeight": "normal"
@@ -1207,12 +1207,35 @@
                   ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "BSMb3",
+          "name": "footerSection",
+          "width": "fill_container",
+          "fill": "#050505",
+          "stroke": {
+            "thickness": {
+              "top": 1
             },
+            "fill": "#333333"
+          },
+          "layout": "vertical",
+          "gap": 16,
+          "padding": [
+            40,
+            120
+          ],
+          "alignItems": "center",
+          "children": [
             {
               "type": "text",
               "id": "PIGay",
               "fill": "#444444",
               "content": "© 2026 Harold. All systems operational.",
+              "textAlign": "center",
               "fontFamily": "JetBrains Mono",
               "fontSize": 12,
               "fontWeight": "normal"

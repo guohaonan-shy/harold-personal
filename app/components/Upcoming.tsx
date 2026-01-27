@@ -18,7 +18,7 @@ export default function Upcoming() {
         {/* Section Title */}
         <div className="flex items-center gap-4 mb-10 font-mono text-[32px]">
           <ChevronRight className="w-8 h-8 text-terminal-green" />
-          <span className="text-terminal-cyan">upcoming</span>
+          <span className="text-terminal-cyan">~/upcoming</span>
           <span className="text-main font-bold">harold</span>
           <span className="text-main font-bold">--upcoming</span>
         </div>

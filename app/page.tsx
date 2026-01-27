@@ -1,6 +1,7 @@
 import Hero from "./components/Hero";
 import Projects from "./components/Projects";
 import Upcoming from "./components/Upcoming";
+import Social from "./components/Social";
 import Footer from "./components/Footer";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
       <Hero />
       <Projects />
       <Upcoming />
+      <Social />
       <Footer />
     </main>
   );
