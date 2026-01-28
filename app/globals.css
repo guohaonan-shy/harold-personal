@@ -42,14 +42,61 @@
   
   html {
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   
   body {
     font-family: var(--font-family-sans);
     background-color: var(--bg-page);
     color: var(--text-main);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
   }
+  
+  /* View Transitions API 扩散效果 */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  ::view-transition-old(root) {
+    z-index: 1;
+  }
+
+  ::view-transition-new(root) {
+    z-index: 9999;
+  }
+
+  .dark::view-transition-old(root) {
+    z-index: 9999;
+  }
+
+  .dark::view-transition-new(root) {
+    z-index: 1;
+  }
+
+  /* 默认的 View Transition 效果（用于语言切换等） */
+  ::view-transition-group(root) {
+    animation-duration: 0.4s;
+  }
+
+  ::view-transition-old(root) {
+    animation: 90ms cubic-bezier(0.4, 0, 1, 1) both fade-out;
+  }
+
+  ::view-transition-new(root) {
+    animation: 210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+}
+
+@keyframes fade-out {
+  to { opacity: 0; transform: translateY(-4px); }
 }
 
 @layer utilities {
@@ -91,5 +138,26 @@
   
   .bg-gradient-section {
     background: linear-gradient(to bottom, var(--bg-terminal), var(--bg-page));
+  }
+  
+  /* Optimized blink animation for cursor */
+  .animate-blink {
+    animation: blink 1s step-end infinite;
+  }
+  
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    50.01%, 100% { opacity: 0; }
+  }
+  
+  /* Lightweight fade-in animation */
+  .animate-fadeIn {
+    animation: fadeIn 0.4s ease-out forwards;
+    opacity: 0;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }

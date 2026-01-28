@@ -1,0 +1,31 @@
+{
+  "hero": {
+    "title": "用 AI 抹平失败的成本，<br></br>去创造真正有价值的<green>事物。</green>",
+    "subtitle": "受 AI 演进启发~",
+    "description": "嗨，我是 <name>Harold</name>。我认为技术不应是护城河或障碍，而是修复问题的<green>扳手</green>。我利用 AI 从重复中解脱，专注于解决我所遇到的挑战——并以此帮助那些面对<green>同样问题</green>的人。",
+    "description2": "与其在大型组织中耗神弥合认知差距，我选择回归<green>创造者的本能</green>：<br></br>专注于快速交付，并将每一处细节打磨至<green>极致的体验。</green>"
+  },
+  "terminal": {
+    "active": "[活跃]",
+    "crafting": "[打磨]",
+    "toeflair": "TOEFLAIR: 优化交互以及迭代 “writing” 模块...",
+    "mrsteady": "Mr.Steady: 优化 UI/UX 细节...",
+    "status": "[状态] 准备好迎接新挑战。"
+  },
+  "projects": {
+    "toeflair": {
+      "description": "你的 AI 托福口语导师。随时随地练习，获得基于官方评分标准的实时反馈和评分。"
+    },
+    "visitProject": "访问项目",
+    "videoPlaceholder": "视频演示占位"
+  },
+  "upcoming": {
+    "total": "共 3 个",
+    "inProgress": "[进行中]",
+    "planned": "[计划中]",
+    "building": "[开发中]"
+  },
+  "footer": {
+    "copyright": "© 2026 Harold. 所有系统运行正常。"
+  }
+}

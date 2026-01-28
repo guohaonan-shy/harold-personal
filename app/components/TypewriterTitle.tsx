@@ -1,7 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, memo } from "react";
 import { ChevronRight } from "lucide-react";
 
 interface TypewriterTitleProps {
@@ -11,87 +10,109 @@ interface TypewriterTitleProps {
   className?: string;
 }
 
-export default function TypewriterTitle({ 
+/**
+ * Optimized TypewriterTitle
+ * Uses requestAnimationFrame and useRef to avoid React state lag.
+ * Only triggers once when visible.
+ */
+function TypewriterTitle({ 
   path, 
   user = "harold", 
   command = "", 
   className = "" 
 }: TypewriterTitleProps) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const [displayText, setDisplayText] = useState("");
+  const ref = useRef<HTMLDivElement>(null);
   const [isTypingComplete, setIsTypingComplete] = useState(false);
-  const fullText = `${path} ${user} ${command}`;
-  
-  // Break down parts for styling
-  const pathPart = path;
-  const userPart = user;
-  const commandPart = command;
+  const [displayedPath, setDisplayedPath] = useState("");
+  const [displayedUser, setDisplayedUser] = useState("");
+  const [displayedCommand, setDisplayedCommand] = useState("");
+  const hasStarted = useRef(false);
 
   useEffect(() => {
-    if (isInView) {
-      let currentText = "";
-      const totalLength = fullText.length;
-      let i = 0;
+    const element = ref.current;
+    if (!element || hasStarted.current) return;
 
-      const timer = setInterval(() => {
-        if (i < totalLength) {
-          currentText += fullText[i];
-          setDisplayText(currentText);
-          i++;
-        } else {
-          clearInterval(timer);
-          setIsTypingComplete(true);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasStarted.current) {
+          hasStarted.current = true;
+          observer.disconnect();
+          startTyping();
         }
-      }, 50); // Typing speed
+      },
+      { threshold: 0.2 } // Trigger earlier
+    );
 
-      return () => clearInterval(timer);
-    }
-  }, [isInView, fullText]);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
-  // Calculate what to show based on current length
-  const getVisibleParts = () => {
-    let remaining = displayText.length;
-    
-    const visiblePath = pathPart.slice(0, remaining);
-    remaining = Math.max(0, remaining - pathPart.length - 1); // -1 for space
-    
-    const visibleUser = userPart.slice(0, remaining);
-    remaining = Math.max(0, remaining - userPart.length - 1); // -1 for space
-    
-    const visibleCommand = commandPart.slice(0, remaining);
-    
-    return { visiblePath, visibleUser, visibleCommand };
+  const startTyping = () => {
+    const fullText = `${path} ${user} ${command}`;
+    let index = 0;
+    let lastTime = 0;
+    const interval = 40; // Slightly faster for better feel
+
+    const animate = (timestamp: number) => {
+      if (!lastTime) lastTime = timestamp;
+
+      if (timestamp - lastTime >= interval) {
+        index++;
+        
+        // Use a single update logic to minimize re-renders
+        let remaining = index;
+        
+        // Path part
+        const pathPart = path.slice(0, remaining);
+        setDisplayedPath(pathPart);
+        
+        // User part
+        remaining = Math.max(0, remaining - path.length - 1);
+        const userPart = user.slice(0, remaining);
+        setDisplayedUser(userPart);
+        
+        // Command part
+        remaining = Math.max(0, remaining - user.length - 1);
+        const commandPart = command.slice(0, remaining);
+        setDisplayedCommand(commandPart);
+        
+        lastTime = timestamp;
+
+        if (index >= fullText.length) {
+          setIsTypingComplete(true);
+          return;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    };
+
+    requestAnimationFrame(animate);
   };
-
-  const { visiblePath, visibleUser, visibleCommand } = getVisibleParts();
 
   return (
     <div ref={ref} className={`flex items-center gap-4 mb-10 font-mono text-[32px] ${className}`}>
       <ChevronRight className="w-8 h-8 text-terminal-green" />
       
       <div className="flex items-center gap-4">
-        {visiblePath && (
-          <span className="text-terminal-cyan">{visiblePath}</span>
+        {displayedPath && (
+          <span className="text-terminal-cyan">{displayedPath}</span>
         )}
         
-        {visibleUser && (
-          <span className="text-main font-bold">{visibleUser}</span>
+        {displayedUser && (
+          <span className="text-main font-bold">{displayedUser}</span>
         )}
         
-        {visibleCommand && (
-          <span className="text-main font-bold">{visibleCommand}</span>
+        {displayedCommand && (
+          <span className="text-main font-bold">{displayedCommand}</span>
         )}
         
-        {/* Blinking Cursor - only show while typing */}
         {!isTypingComplete && (
-          <motion.span
-            animate={{ opacity: [1, 1, 0, 0] }}
-            transition={{ duration: 1, repeat: Infinity, times: [0, 0.5, 0.5, 1] }}
-            className="w-3 h-8 bg-terminal-green inline-block ml-1"
-          />
+          <span className="w-3 h-8 bg-terminal-green inline-block ml-1 animate-blink" />
         )}
       </div>
     </div>
   );
 }
+
+export default memo(TypewriterTitle);

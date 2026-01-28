@@ -1,7 +1,7 @@
 "use client";
 
 import { Play, ExternalLink, Sparkles } from "lucide-react";
-
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 
 interface ProjectCardProps {
@@ -13,6 +13,7 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ title, description, tags, filename, link }: ProjectCardProps) {
+  const t = useTranslations("projects");
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -32,7 +33,7 @@ export default function ProjectCard({ title, description, tags, filename, link }
       {/* Visual Placeholder */}
       <div className="h-[500px] bg-page dark:bg-[#1A1A1A] flex flex-col items-center justify-center gap-3">
         <Play className="w-12 h-12 text-dim" />
-        <span className="text-sm text-dim">Video Demo Placeholder</span>
+        <span className="text-sm text-dim">{t("videoPlaceholder")}</span>
       </div>
       
       {/* Info Section */}
@@ -65,7 +66,7 @@ export default function ProjectCard({ title, description, tags, filename, link }
           transition={{ delay: 0.3 }}
           className="inline-flex items-center gap-2 text-main hover:underline font-bold text-sm"
         >
-          <span>Visit Project</span>
+          <span>{t("visitProject")}</span>
           <ExternalLink className="w-4 h-4" />
         </motion.a>
       )}

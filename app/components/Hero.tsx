@@ -1,7 +1,13 @@
+"use client";
+
 import { ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
 import Terminal from "./Terminal";
+import DecryptedText from "./DecryptedText";
 
 export default function Hero() {
+  const t = useTranslations("hero");
   return (
     <section className="min-h-[800px] bg-gradient-section border-t border-light flex flex-col items-center">
       <div className="max-w-7xl mx-auto px-8 lg:px-[120px] py-[80px] w-full">
@@ -9,9 +15,12 @@ export default function Hero() {
         <div className="flex flex-col items-center text-center space-y-8 mb-16">
           {/* Avatar */}
           <div className="w-32 h-32 rounded-full border-4 border-main/20 overflow-hidden bg-terminal shadow-xl group">
-            <img 
+            <Image 
               src="/avatar.png" 
-              alt="Harold" 
+              alt="Harold"
+              width={128}
+              height={128}
+              priority
               className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
             />
           </div>
@@ -26,14 +35,16 @@ export default function Hero() {
           </div>
           
           {/* Big Heading - Spans across */}
-          <div className="max-w-5xl mx-auto space-y-4">
-            <h1 className="text-5xl lg:text-7xl font-bold text-main leading-[1.05] tracking-tight">
-              AI lowered the <span className="text-terminal-green italic">cost of failure,</span> <br className="hidden lg:block" />
-              so I'm building things that <span className="text-terminal-green italic">actually matter.</span>
+          <div className="max-w-5xl mx-auto space-y-4 min-h-[120px] lg:min-h-[160px] flex flex-col justify-center">
+            <h1 className="text-5xl lg:text-7xl font-bold text-main leading-[1.1] tracking-tight">
+              {t.rich("title", {
+                green: (chunks) => <span className="text-terminal-green italic">{chunks}</span>,
+                br: () => <br className="hidden lg:block" />
+              })}
             </h1>
-            <p className="text-xs font-mono text-dim opacity-40">
-              (Inspired by the AI Era 🤖)
-            </p>
+            <div className="text-xs font-mono text-dim opacity-40">
+              <DecryptedText text={t("subtitle")} speed={40} maxIterations={15} />
+            </div>
           </div>
         </div>
 
@@ -42,9 +53,15 @@ export default function Hero() {
           {/* Description - Left column */}
           <div className="flex-1">
             <p className="text-xl text-dim leading-[1.6] max-w-[550px]">
-              Hi, I'm <span className="text-main font-semibold">Harold</span>. I believe AI should be a bridge, not a barrier. 
+              {t.rich("description", {
+                name: (chunks) => <span className="text-main font-semibold">{chunks}</span>,
+                green: (chunks) => <span className="text-terminal-green italic">{chunks}</span>
+              })}
               <br /><br />
-              Whether it's helping seniors keep up with technology or lowering the cost of learning, I build AI-powered tools to empower everyone. Currently iterating <span className="text-terminal-cyan font-medium">TOEFLAIR</span> and crafting <span className="text-terminal-green font-medium">Mr.Steady</span>.
+              {t.rich("description2", {
+                green: (chunks) => <span className="text-terminal-green italic">{chunks}</span>,
+                br: () => <br className="hidden lg:block" />
+              })}
             </p>
           </div>
           
@@ -52,8 +69,7 @@ export default function Hero() {
           <div className="flex-1 w-full flex justify-center lg:justify-end">
             <div className="relative w-full max-w-[500px] transform lg:rotate-2 hover:rotate-0 transition-transform duration-700">
               <Terminal />
-              {/* Decorative element */}
-              <div className="absolute -z-10 -top-4 -right-4 w-full h-full bg-terminal-green/5 rounded-xl blur-2xl" />
+              {/* Removed blur-xl to improve GPU performance during scrolling */}
             </div>
           </div>
         </div>

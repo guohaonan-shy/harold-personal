@@ -1,0 +1,31 @@
+{
+  "hero": {
+    "title": "Building What Matters, <green>Powered by AI.</green>",
+    "subtitle": "Innovation in progress.",
+    "description": "Hi, I'm <name>Harold</name>. I view technology not as a moat or a barrier, but as a <green>wrench</green> to fix what's broken. I use AI to automate the repetitive, allowing me to focus on solving my own challenges—and then helping those facing the <green>same problems.</green>",
+    "description2": "Instead of narrowing cognitive gaps in large hierarchies, I choose to spend my energy on <green>rapid creation</green> and crafting <br></br><green>seamless experiences.</green>"
+  },
+  "terminal": {
+    "active": "[ACTIVE]",
+    "crafting": "[CRAFTING]",
+    "toeflair": "TOEFLAIR: Optimizing interactions and iterating on the 'writing' module...",
+    "mrsteady": "Mr.Steady: Refining UI/UX details...",
+    "status": "[STATUS] Ready for new challenges."
+  },
+  "projects": {
+    "toeflair": {
+      "description": "Your AI-powered TOEFL speaking tutor. Practice anytime, anywhere with real-time feedback and scoring based on official rubrics."
+    },
+    "visitProject": "Visit Project",
+    "videoPlaceholder": "Video Demo Placeholder"
+  },
+  "upcoming": {
+    "total": "total 3",
+    "inProgress": "[in-progress]",
+    "planned": "[planned]",
+    "building": "[building]"
+  },
+  "footer": {
+    "copyright": "© 2026 Harold. All systems operational."
+  }
+}

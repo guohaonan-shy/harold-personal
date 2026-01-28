@@ -1,8 +1,12 @@
-import { ChevronRight } from "lucide-react";
+"use client";
+
+import { useTranslations } from "next-intl";
 import ProjectCard from "./ProjectCard";
 import TypewriterTitle from "./TypewriterTitle";
 
 export default function Projects() {
+  const t = useTranslations("projects");
+  
   return (
     <section className="bg-gradient-section border-t border-light">
       <div className="max-w-7xl mx-auto px-8 lg:px-[120px] py-16">
@@ -17,7 +21,7 @@ export default function Projects() {
         <div className="space-y-8">
           <ProjectCard
             title="TOEFLAIR"
-            description="Your AI-powered TOEFL speaking tutor. Practice anytime, anywhere with real-time feedback and scoring based on official rubrics."
+            description={t("toeflair.description")}
             tags={["AI", "Education", "Web"]}
             filename="toeflair.exe"
             link="#"
