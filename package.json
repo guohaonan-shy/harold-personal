@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "overrides": {
+    "@swc/helpers": "0.5.18"
+  },
   "dependencies": {
     "framer-motion": "^12.29.2",
     "lucide-react": "^0.563.0",
