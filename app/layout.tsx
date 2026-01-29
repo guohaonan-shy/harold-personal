@@ -6,7 +6,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Harold - Indie Hacker & Full-Stack Developer",
-  description: "I build software that empowers other developers. Ship small, iterate fast, and keep it fun.",
+  description: "I build software that empowers other developers. Ship small, iterate fast, and keep it fun. Embracing the Vibe Coding era, I turn caffeine into an endless stream of AI tools and indie products that simplify the complex.",
   icons: {
     icon: "/favicon.svg",
   },
@@ -17,10 +17,10 @@ export const metadata: Metadata = {
     url: "https://haroldguo.com",
     siteName: "Harold Guo",
     title: "Harold - Indie Hacker & Full-Stack Developer",
-    description: "I build software that empowers other developers. Ship small, iterate fast, and keep it fun.",
+    description: "I build software that empowers other developers. Ship small, iterate fast, and keep it fun. Embracing the Vibe Coding era, I turn caffeine into an endless stream of AI tools and indie products that simplify the complex.",
     images: [
       {
-        url: "/avatar.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Harold Guo - Indie Hacker & Full-Stack Developer",
@@ -32,8 +32,8 @@ export const metadata: Metadata = {
     site: "@HaonanGuo330592",
     creator: "@HaonanGuo330592",
     title: "Harold - Indie Hacker & Full-Stack Developer",
-    description: "I build software that empowers other developers. Ship small, iterate fast, and keep it fun.",
-    images: ["/avatar.png"],
+    description: "I build software that empowers other developers. Ship small, iterate fast, and keep it fun. Embracing the Vibe Coding era, I turn caffeine into an endless stream of AI tools and indie products.",
+    images: ["/og-image.png"],
   },
 };
 

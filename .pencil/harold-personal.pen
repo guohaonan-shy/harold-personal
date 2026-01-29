@@ -2566,6 +2566,182 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "ZQbnO",
+      "x": 3303,
+      "y": -48,
+      "name": "OG Image - Terminal Style",
+      "width": 1200,
+      "height": 630,
+      "fill": "#0A0A0A",
+      "cornerRadius": 12,
+      "layout": "vertical",
+      "gap": 60,
+      "padding": [
+        180,
+        100
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "NPWgz",
+          "name": "mainRow",
+          "width": "fill_container",
+          "gap": 50,
+          "children": [
+            {
+              "type": "frame",
+              "id": "DsCjo",
+              "name": "avatar",
+              "metadata": {
+                "type": "unsplash",
+                "username": "silverkblack",
+                "link": "https://unsplash.com/@silverkblack",
+                "author": "Vitaly Gariev"
+              },
+              "width": 200,
+              "height": 200,
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "../public/avatar.png",
+                "mode": "fill"
+              },
+              "cornerRadius": 100
+            },
+            {
+              "type": "frame",
+              "id": "jeX07",
+              "name": "textContainer",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "8haoY",
+                  "name": "title",
+                  "fill": "#FFFFFF",
+                  "content": "Harold Guo",
+                  "fontFamily": "Inter",
+                  "fontSize": 72,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "m8s8t",
+                  "name": "subtitle",
+                  "fill": "#9CA3AF",
+                  "content": "Indie Hacker & Full-Stack Developer",
+                  "fontFamily": "Inter",
+                  "fontSize": 32,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "wh0Mb",
+                  "name": "tagline",
+                  "fill": "#27C93F",
+                  "content": "> Building What Matters, Powered by AI_",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 28,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "emeKh",
+          "name": "statusBar",
+          "width": "fill_container",
+          "height": 60,
+          "fill": "#121212",
+          "padding": [
+            0,
+            40
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "cITSD",
+              "name": "leftGroup",
+              "gap": 20,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "SqcVz",
+                  "width": 0,
+                  "height": 0,
+                  "iconFontName": "globe",
+                  "iconFontFamily": "lucide",
+                  "fill": "#6B7280"
+                },
+                {
+                  "type": "text",
+                  "id": "DoRGE",
+                  "fill": "#27C93F",
+                  "content": "haroldguo.com _",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "aDqgd",
+              "name": "socialGroup",
+              "gap": 24,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "R2Pbi",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "github",
+                  "iconFontFamily": "lucide",
+                  "fill": "#6B7280"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "i0pCQ",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "twitter",
+                  "iconFontFamily": "lucide",
+                  "fill": "#6B7280"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "CaBT8",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "linkedin",
+                  "iconFontFamily": "lucide",
+                  "fill": "#6B7280"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "vAlaH",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "youtube",
+                  "iconFontFamily": "lucide",
+                  "fill": "#6B7280"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "variables": {
