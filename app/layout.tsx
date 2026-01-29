@@ -10,6 +10,31 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
   },
+  metadataBase: new URL("https://haroldguo.com"),
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://haroldguo.com",
+    siteName: "Harold Guo",
+    title: "Harold - Indie Hacker & Full-Stack Developer",
+    description: "I build software that empowers other developers. Ship small, iterate fast, and keep it fun.",
+    images: [
+      {
+        url: "/avatar.png",
+        width: 1200,
+        height: 630,
+        alt: "Harold Guo - Indie Hacker & Full-Stack Developer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@HaonanGuo330592",
+    creator: "@HaonanGuo330592",
+    title: "Harold - Indie Hacker & Full-Stack Developer",
+    description: "I build software that empowers other developers. Ship small, iterate fast, and keep it fun.",
+    images: ["/avatar.png"],
+  },
 };
 
 export default async function RootLayout({
