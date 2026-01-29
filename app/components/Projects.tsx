@@ -24,6 +24,8 @@ export default function Projects() {
             description={t("toeflair.description")}
             tags={["AI", "Education", "Web"]}
             filename="toeflair.exe"
+            videoUrl="https://media.haroldguo.com/showcase_simplified_1080.mp4"
+            videoUrl720p="https://media.haroldguo.com/showcase_simplified_720.mp4"
             link="#"
           />
         </div>
