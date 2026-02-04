@@ -24,7 +24,7 @@ export default function Projects() {
             description={t("toeflair.description")}
             tags={["AI", "Education", "Web"]}
             filename="toeflair.exe"
-            link="#"
+            link="https://toeflair.soloworks.io/"
           />
         </div>
       </div>
