@@ -20,10 +20,14 @@
     "videoPlaceholder": "Video Demo Placeholder"
   },
   "upcoming": {
-    "total": "total 3",
+    "total": "total 4",
     "inProgress": "[in-progress]",
     "planned": "[planned]",
-    "building": "[building]"
+    "building": "[building]",
+    "details": {
+      "researching": "researching solution",
+      "uiCompleted": "UI completed"
+    }
   },
   "footer": {
     "copyright": "© 2026 Harold. All systems operational."

@@ -7,11 +7,13 @@ import TypewriterTitle from "./TypewriterTitle";
 interface UpcomingProject {
   name: string;
   statusKey: "inProgress" | "planned" | "building";
+  detailKey?: string;
 }
 
 const upcomingProjects: UpcomingProject[] = [
-  { name: "Study-Abroad-Agent", statusKey: "inProgress" },
-  { name: "Hypertension-Care-AI", statusKey: "building" },
+  { name: "Study-Abroad-Agent", statusKey: "inProgress", detailKey: "researching" },
+  { name: "Hypertension-Care-AI", statusKey: "building", detailKey: "uiCompleted" },
+  { name: "bill-watcher", statusKey: "building", detailKey: "uiCompleted" },
   { name: "More-cool-things", statusKey: "planned" },
 ];
 
@@ -77,11 +79,16 @@ export default function Upcoming() {
               </div>
 
               {/* Status with Spinner */}
-              <div className={`flex items-center min-w-[140px] justify-end ${statusStyles[project.statusKey]}`}>
+              <div className={`flex items-center min-w-[200px] justify-end gap-2 ${statusStyles[project.statusKey]}`}>
                 <StatusIcon status={project.statusKey} />
-                <span className="text-xs uppercase tracking-widest font-bold">
+                <span className="text-xs tracking-wide font-bold">
                   {t(project.statusKey).replace('[', '').replace(']', '')}
                 </span>
+                {project.detailKey && (
+                  <span className="text-[10px] text-dim/60">
+                    ({t(`details.${project.detailKey}`)})
+                  </span>
+                )}
               </div>
             </div>
           ))}

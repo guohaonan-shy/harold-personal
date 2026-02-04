@@ -20,10 +20,14 @@
     "videoPlaceholder": "视频演示占位"
   },
   "upcoming": {
-    "total": "共 3 个",
+    "total": "共 4 个",
     "inProgress": "[进行中]",
     "planned": "[计划中]",
-    "building": "[开发中]"
+    "building": "[开发中]",
+    "details": {
+      "researching": "方案调研",
+      "uiCompleted": "UI设计完成"
+    }
   },
   "footer": {
     "copyright": "© 2026 Harold. 所有系统运行正常。"
