@@ -1,10 +1,6 @@
 "use client";
 
-<<<<<<< HEAD
-import { useState } from "react";
-=======
-import React from "react";
->>>>>>> 74e47d34330e5ce9dbbbd05dcf87a50b01463644
+import React, { useState } from "react";
 import { Play, ExternalLink } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
@@ -29,9 +25,7 @@ export default function ProjectCard({
   videoUrl720p,
 }: ProjectCardProps) {
   const t = useTranslations("projects");
-<<<<<<< HEAD
   const [isHovered, setIsHovered] = useState(false);
-=======
   const [isReady, setIsReady] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
   const [loadingText, setLoadingText] = React.useState("> CONNECTING...");
@@ -63,7 +57,6 @@ export default function ProjectCard({
     startTimeRef.current = Date.now();
     
     const updateProgress = () => {
-      // If video is ready, rush to 100%
       if (canPlayRef.current) {
         setProgress(prev => {
           const next = prev + (100 - prev) * 0.2;
@@ -76,37 +69,25 @@ export default function ProjectCard({
         return;
       }
 
-      // Simulated progress using easing curve
-      // Target duration: ~8 seconds to reach 95%
       const elapsed = Date.now() - startTimeRef.current;
-      const duration = 8000; // 8 seconds to 95%
+      const duration = 8000;
       const t = Math.min(elapsed / duration, 1);
-      
-      // Ease-out curve: starts faster, slows down towards the end
-      // Using cubic ease-out: 1 - (1-t)^3
       const eased = 1 - Math.pow(1 - t, 3);
-      
-      // Map to 0-95% range
       const targetProgress = eased * 95;
       
       setProgress(prev => {
-        // Smooth transition to target
         const diff = targetProgress - prev;
         return prev + diff * 0.1;
       });
     };
 
-    // Update every 50ms for smooth animation
     const interval = setInterval(updateProgress, 50);
-    
     return () => clearInterval(interval);
   }, [isReady, videoUrl]);
 
-  // Handle video ready to play
   const handleCanPlay = React.useCallback(() => {
     canPlayRef.current = true;
   }, []);
->>>>>>> 74e47d34330e5ce9dbbbd05dcf87a50b01463644
 
   return (
     <motion.div 
@@ -128,7 +109,6 @@ export default function ProjectCard({
       
       {/* Visual Container */}
       <div className="h-[500px] bg-page dark:bg-[#1A1A1A] relative overflow-hidden group">
-        {/* Terminal Loading Overlay */}
         {!isReady && (
           <div className="absolute inset-0 z-10 flex flex-col items-center justify-center font-mono text-terminal-green bg-black/90">
             <div className="flex flex-col gap-2 w-64">
@@ -151,7 +131,6 @@ export default function ProjectCard({
           </div>
         )}
 
-        {/* Video Element */}
         {videoUrl ? (
           <video
             ref={videoRef}
@@ -175,7 +154,6 @@ export default function ProjectCard({
           </div>
         )}
 
-        {/* CRT Scanline Effect Overlay */}
         <div className="absolute inset-0 pointer-events-none bg-scanline opacity-[0.03] z-20" />
       </div>
       
@@ -200,12 +178,8 @@ export default function ProjectCard({
         </AnimatePresence>
 
         <div className="space-y-5">
-          {/* Header Row: Title + Tags */}
           <div className="flex items-center gap-4 pr-40">
-            {/* Title */}
             <h3 className="text-4xl font-mono font-bold text-main leading-none tracking-tight">{title}</h3>
-            
-            {/* Tags */}
             <div className="flex items-center gap-2">
               {tags.map((tag) => (
                 <span
@@ -217,8 +191,6 @@ export default function ProjectCard({
               ))}
             </div>
           </div>
-          
-          {/* Description */}
           <p className="text-base text-dim leading-[1.6] w-full">{description}</p>
         </div>
       </div>
