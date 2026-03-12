@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Play, ExternalLink } from "lucide-react";
+import { Play, ExternalLink, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -11,21 +11,24 @@ interface ProjectCardProps {
   tags: string[];
   filename: string;
   link?: string;
-  videoUrl?: string; // 默认视频 URL (建议 1080p)
-  videoUrl720p?: string; // 移动端优化视频 URL
+  videoUrl?: string;
+  videoUrl720p?: string;
+  imageUrl?: string;
 }
 
-export default function ProjectCard({ 
-  title, 
-  description, 
-  tags, 
-  filename, 
+export default function ProjectCard({
+  title,
+  description,
+  tags,
+  filename,
   link,
   videoUrl,
   videoUrl720p,
+  imageUrl,
 }: ProjectCardProps) {
   const t = useTranslations("projects");
   const [isHovered, setIsHovered] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const [isReady, setIsReady] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
   const [loadingText, setLoadingText] = React.useState("> CONNECTING...");
@@ -33,7 +36,6 @@ export default function ProjectCard({
   const canPlayRef = React.useRef(false);
   const startTimeRef = React.useRef<number>(0);
 
-  // Update loading text based on real progress
   React.useEffect(() => {
     if (isReady) {
       setLoadingText("> STREAM_READY. PLAYING...");
@@ -50,12 +52,11 @@ export default function ProjectCard({
     }
   }, [progress, isReady]);
 
-  // Simulated progress with easing curve
   React.useEffect(() => {
     if (isReady || !videoUrl) return;
 
     startTimeRef.current = Date.now();
-    
+
     const updateProgress = () => {
       if (canPlayRef.current) {
         setProgress(prev => {
@@ -74,7 +75,7 @@ export default function ProjectCard({
       const t = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - t, 3);
       const targetProgress = eased * 95;
-      
+
       setProgress(prev => {
         const diff = targetProgress - prev;
         return prev + diff * 0.1;
@@ -90,14 +91,16 @@ export default function ProjectCard({
   }, []);
 
   return (
-    <motion.div 
+    <>
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="rounded-2xl border border-main bg-card overflow-hidden transition-all duration-300 hover:border-main/60"
+      className="rounded-2xl bg-card overflow-hidden transition-all duration-300"
+      style={{ border: "1px solid rgba(128,128,128,0.3)" }}
     >
       {/* Card Header */}
       <div className="flex items-center gap-2 h-9 px-4 border-b border-main">
@@ -106,10 +109,10 @@ export default function ProjectCard({
         <div className="w-2.5 h-2.5 rounded-full bg-terminal-green" />
         <span className="ml-2 text-xs font-mono text-dim">~/projects/{filename}</span>
       </div>
-      
+
       {/* Visual Container */}
-      <div className="h-[500px] bg-page dark:bg-[#1A1A1A] relative overflow-hidden group">
-        {!isReady && (
+      <div className="bg-page dark:bg-[#1A1A1A] relative overflow-hidden group" style={{ height: "360px" }}>
+        {!isReady && !imageUrl && (
           <div className="absolute inset-0 z-10 flex flex-col items-center justify-center font-mono text-terminal-green bg-black/90">
             <div className="flex flex-col gap-2 w-64">
               <div className="flex items-center gap-2">
@@ -117,7 +120,7 @@ export default function ProjectCard({
                 <span className="text-sm">{loadingText}</span>
               </div>
               <div className="w-full h-1 bg-terminal-green/20 rounded-full overflow-hidden">
-                <motion.div 
+                <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
                   transition={{ duration: 0.3 }}
@@ -147,6 +150,16 @@ export default function ProjectCard({
             {videoUrl720p && <source src={videoUrl720p} media="(max-width: 768px)" type="video/mp4" />}
             <source src={videoUrl} type="video/mp4" />
           </video>
+        ) : imageUrl ? (
+          <button onClick={() => setLightboxOpen(true)} className="block w-full h-full cursor-zoom-in">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={imageUrl}
+              alt={title}
+              className="w-full h-full object-contain"
+              style={{ backgroundColor: "#0a0a0a" }}
+            />
+          </button>
         ) : (
           <div className="h-full flex flex-col items-center justify-center gap-3">
             <Play className="w-12 h-12 text-dim" />
@@ -156,44 +169,100 @@ export default function ProjectCard({
 
         <div className="absolute inset-0 pointer-events-none bg-scanline opacity-[0.03] z-20" />
       </div>
-      
-      {/* Info Section */}
-      <div className="p-10 border-t border-main relative">
-        <AnimatePresence>
-          {link && isHovered && (
-            <motion.a
-              href={link}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, x: 10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 10 }}
-              transition={{ duration: 0.2 }}
-              className="absolute top-10 right-10 flex items-center gap-2 text-main font-mono text-xs font-bold bg-main/5 hover:bg-main/10 border border-main/20 hover:border-main/40 px-4 py-2 rounded-full transition-colors duration-200"
-            >
-              <span>{t("visitProject")}</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </motion.a>
-          )}
-        </AnimatePresence>
 
-        <div className="space-y-5">
-          <div className="flex items-center gap-4 pr-40">
-            <h3 className="text-4xl font-mono font-bold text-main leading-none tracking-tight">{title}</h3>
-            <div className="flex items-center gap-2">
-              {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1.5 rounded-md bg-main/5 border border-main/20 text-xs font-bold text-main/80 uppercase tracking-widest"
+      {/* Info Section */}
+      <div className="p-6 border-t border-main" style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
+        <div className="flex items-center justify-between gap-3" style={{ minHeight: "2.25rem" }}>
+          <h3 className="text-2xl font-mono font-bold text-main leading-none tracking-tight">{title}</h3>
+          {link && (
+            <AnimatePresence>
+              {isHovered && (
+                <motion.a
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 10 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex items-center gap-2 text-main font-mono text-xs font-bold bg-main/5 hover:bg-main/10 border border-main/20 hover:border-main/40 px-4 py-2 rounded-full transition-colors duration-200 shrink-0"
+                  style={{ marginLeft: "auto" }}
                 >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-          <p className="text-base text-dim leading-[1.6] w-full">{description}</p>
+                  <span>{t("visitProject")}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </motion.a>
+              )}
+            </AnimatePresence>
+          )}
         </div>
+        <div className="flex items-center gap-2 flex-wrap">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-3 py-1.5 rounded-md bg-main/5 border border-main/20 text-xs font-bold text-main/80 uppercase tracking-widest"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+        <p className="text-sm text-dim leading-[1.6]">{description}</p>
       </div>
     </motion.div>
+
+    {/* Lightbox */}
+    <AnimatePresence>
+      {lightboxOpen && imageUrl && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          onClick={() => setLightboxOpen(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "rgba(0,0,0,0.85)",
+            cursor: "zoom-out",
+            padding: "2rem",
+          }}
+        >
+          <button
+            onClick={(e) => { e.stopPropagation(); setLightboxOpen(false); }}
+            style={{
+              position: "absolute",
+              top: "1.5rem",
+              right: "1.5rem",
+              color: "white",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            <X size={28} />
+          </button>
+          <motion.img
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            src={imageUrl}
+            alt={title}
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxWidth: "90vw",
+              maxHeight: "90vh",
+              objectFit: "contain",
+              borderRadius: "12px",
+              cursor: "default",
+            }}
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>
+    </>
   );
 }

@@ -8,13 +8,16 @@
   "terminal": {
     "active": "[活跃]",
     "crafting": "[打磨]",
-    "toeflair": "TOEFLAIR: 优化交互以及迭代 “writing” 模块...",
-    "mrsteady": "Mr.Steady: 优化 UI/UX 细节...",
+    "toeflair": "TOEFLAIR: 正在开发真题、写作及学习模块...",
+    "mrsteady": "RedActFlow: 正在进行 Beta 内测...",
     "status": "[状态] 准备好迎接新挑战。"
   },
   "projects": {
     "toeflair": {
       "description": "你的 AI 托福口语导师。随时随地练习，获得基于官方评分标准的实时反馈和评分。"
+    },
+    "redactflow": {
+      "description": "AI 驱动的 PDF 脱敏平台。自动检测敏感信息，结合人工审核，精准完成文档脱敏。"
     },
     "visitProject": "访问项目",
     "videoPlaceholder": "视频演示占位"
@@ -26,7 +29,10 @@
     "building": "[开发中]",
     "details": {
       "researching": "方案调研",
-      "uiCompleted": "UI设计完成"
+      "uiCompleted": "UI设计完成",
+      "launchingMayJun": "计划 5–6 月启动",
+      "betaTesting": "公开测试中",
+      "newModules": "真题、写作及学习模块"
     }
   },
   "footer": {

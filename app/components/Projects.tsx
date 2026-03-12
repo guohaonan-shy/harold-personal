@@ -9,7 +9,7 @@ export default function Projects() {
   
   return (
     <section className="bg-gradient-section border-t border-light">
-      <div className="max-w-7xl mx-auto px-8 lg:px-[120px] py-16">
+      <div className="mx-auto px-8 lg:px-16 py-16" style={{ maxWidth: "1440px" }}>
         {/* Section Title */}
         <TypewriterTitle 
           path="~/projects"
@@ -18,7 +18,7 @@ export default function Projects() {
         />
         
         {/* Project Cards */}
-        <div className="space-y-8">
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem" }}>
           <ProjectCard
             title="TOEFLAIR"
             description={t("toeflair.description")}
@@ -27,6 +27,14 @@ export default function Projects() {
             videoUrl="https://media.haroldguo.com/showcase_simplified_1080.mp4"
             videoUrl720p="https://media.haroldguo.com/showcase_simplified_720.mp4"
             link="https://toeflair.soloworks.io/"
+          />
+          <ProjectCard
+            title="RedActFlow"
+            description={t("redactflow.description")}
+            tags={["AI", "PDF", "Productivity", "Open Beta"]}
+            filename="redactflow.exe"
+            imageUrl="https://media.haroldguo.com/redactflow.png"
+            link="https://redactflow-preview.up.railway.app/"
           />
         </div>
       </div>

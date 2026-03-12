@@ -11,9 +11,9 @@ interface UpcomingProject {
 }
 
 const upcomingProjects: UpcomingProject[] = [
-  { name: "Study-Abroad-Agent", statusKey: "inProgress", detailKey: "researching" },
-  { name: "Hypertension-Care-AI", statusKey: "building", detailKey: "uiCompleted" },
-  { name: "bill-watcher", statusKey: "building", detailKey: "uiCompleted" },
+  { name: "TOEFLAIR", statusKey: "building", detailKey: "newModules" },
+  { name: "RedActFlow", statusKey: "building", detailKey: "betaTesting" },
+  { name: "Study-Abroad-Agent", statusKey: "planned", detailKey: "launchingMayJun" },
   { name: "More-cool-things", statusKey: "planned" },
 ];
 

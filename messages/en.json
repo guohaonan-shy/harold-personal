@@ -8,13 +8,16 @@
   "terminal": {
     "active": "[ACTIVE]",
     "crafting": "[CRAFTING]",
-    "toeflair": "TOEFLAIR: Optimizing interactions and iterating on the 'writing' module...",
-    "mrsteady": "Mr.Steady: Refining UI/UX details...",
+    "toeflair": "TOEFLAIR: Building real-exam questions, writing & study modules...",
+    "mrsteady": "RedActFlow: Running beta with early access users...",
     "status": "[STATUS] Ready for new challenges."
   },
   "projects": {
     "toeflair": {
       "description": "Your AI-powered TOEFL speaking tutor. Practice anytime, anywhere with real-time feedback and scoring based on official rubrics."
+    },
+    "redactflow": {
+      "description": "AI-powered PDF redaction platform. Detect sensitive data automatically, review with human-in-the-loop, and redact with precision."
     },
     "visitProject": "Visit Project",
     "videoPlaceholder": "Video Demo Placeholder"
@@ -26,7 +29,10 @@
     "building": "[building]",
     "details": {
       "researching": "researching solution",
-      "uiCompleted": "UI completed"
+      "uiCompleted": "UI completed",
+      "launchingMayJun": "launching May–Jun",
+      "betaTesting": "open beta",
+      "newModules": "real-exam, writing & study modules"
     }
   },
   "footer": {
