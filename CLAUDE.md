@@ -11,7 +11,7 @@ Harold Guo's personal portfolio site. Modern Next.js static export with animatio
 - **Framework:** Next.js (static export, `output: "export"`)
 - **UI:** React 19 + TypeScript + Tailwind CSS v4
 - **Animation:** Framer Motion + custom RAF/IntersectionObserver animations
-- **i18n:** next-intl (EN default, ZH), cookie-based locale persistence
+- **i18n:** next-intl (EN default, ZH), fully client-side locale switching via `LocaleProvider` context
 - **Theming:** next-themes with View Transitions API (dark/light)
 - **Icons:** Lucide React
 - **Fonts:** Inter (sans) + JetBrains Mono (mono) from Google Fonts
@@ -43,10 +43,13 @@ app/
     TypewriterTitle.tsx # Terminal prompt typewriter animation
     DecryptedText.tsx   # Character decryption reveal animation
     ThemeToggle.tsx     # Light/dark switcher (View Transitions API)
-    LanguageToggle.tsx  # EN/ZH switcher (View Transitions API + cookie)
+    LanguageToggle.tsx  # EN/ZH switcher (uses LocaleProvider context)
+    LocaleProvider.tsx  # Client-side locale management (React context + cookie)
+    Experience.tsx      # Work + education timeline (git graph style)
+    OpenSource.tsx      # Open source projects section
 i18n/
   config.ts             # Locales: ['en', 'zh'], defaultLocale: 'en'
-  request.ts            # Server-side i18n, cookie detection
+  request.ts            # Server-side i18n config (not used for locale detection in static export)
 messages/
   en.json               # English translations
   zh.json               # Chinese translations
@@ -82,6 +85,14 @@ Array of `{ nameKey, statusKey, detailKey? }` objects referencing i18n keys.
 3. bill-watcher — building (UI completed)
 4. More-cool-things — planned
 
+### Experience Timeline (Experience.tsx)
+Horizontal git-graph style timeline (desktop) / vertical list (mobile). Includes both education and work history in chronological order. Education entries use Lucide `GraduationCap` icon; work entries use company logo SVGs from `public/logos/`.
+
+**Current timeline:** BUPT (2016) → ByteDance Edu (2020) → ByteDance E-com (2021) → NUS (2023) → TikTok (2024) → Plaud (2025, HEAD)
+
+### Open Source (OpenSource.tsx)
+Open source project cards. Currently features Excalidrawer.
+
 ### Translations (messages/en.json + zh.json)
 Project names, descriptions, status details, and all UI text live here.
 
@@ -106,7 +117,7 @@ Project names, descriptions, status details, and all UI text live here.
 - **Name:** Harold Guo
 - **Roles:** AI Agent Engineer, Full-Stack Developer, Indie Hacker, Content Creator
 - **Current:** Plaud
-- **Education:** National University of Singapore
+- **Education:** BUPT (B.Eng, Communication Engineering, 2016–2020), NUS (M.Comp, Computer Science, 2023–2024)
 - **Skills:** AI/LLM, TypeScript, React, Next.js, Python, Golang
 - **GitHub username:** guohaonan-shy
 
@@ -133,6 +144,7 @@ GITHUB_USERNAME=guohaonan-shy
 ## Notes
 
 - Static export: no server-side rendering at runtime; GitHub data cached at build time
-- View Transitions API used for theme/language switches — Chrome/Edge only (graceful degradation)
+- Language switching is fully client-side: both message bundles are loaded, `LocaleProvider` manages locale via React context + cookie. This avoids `headers()` issues with static export.
+- View Transitions API used for theme switches — Chrome/Edge only (graceful degradation)
 - Video player has CRT scanline overlay effect
 - Contribution chart fetched from `ghchart.rshah.org`

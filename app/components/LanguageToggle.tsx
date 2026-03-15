@@ -1,31 +1,10 @@
 "use client";
 
 import { Globe } from "lucide-react";
-import { useLocale } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useLocaleToggle } from "./LocaleProvider";
 
 export default function LanguageToggle() {
-  const locale = useLocale();
-  const router = useRouter();
-
-  const toggleLocale = () => {
-    const newLocale = locale === "en" ? "zh" : "en";
-
-    // @ts-ignore
-    if (!document.startViewTransition) {
-      document.cookie = `locale=${newLocale};path=/;max-age=31536000`;
-      router.refresh();
-      return;
-    }
-
-    // @ts-ignore
-    document.startViewTransition(async () => {
-      document.cookie = `locale=${newLocale};path=/;max-age=31536000`;
-      router.refresh();
-      // 给浏览器一点时间来响应路由刷新
-      await new Promise((resolve) => setTimeout(resolve, 150));
-    });
-  };
+  const { locale, toggleLocale } = useLocaleToggle();
 
   return (
     <button

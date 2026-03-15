@@ -22,6 +22,37 @@
     "visitProject": "Visit Project",
     "videoPlaceholder": "Video Demo Placeholder"
   },
+  "openSource": {
+    "excalidrawer": {
+      "description": "Code-first Excalidraw diagram generation with built-in templates, CLI, and SVG/PNG export. Works with Claude Code, Copilot, Cursor, and 30+ AI assistants."
+    }
+  },
+  "experience": {
+    "bupt": {
+      "role": "B.Eng · Communication Engineering",
+      "summary": "Beijing University of Posts and Telecommunications, Class of 2020."
+    },
+    "nus": {
+      "role": "M.Comp · Computer Science",
+      "summary": "National University of Singapore, Class of 2024."
+    },
+    "plaud": {
+      "role": "AI Agent Engineer",
+      "summary": "Building developer platform, voice agents, and vertical industry Agent solutions."
+    },
+    "tiktok": {
+      "role": "Backend Engineer · Global Live",
+      "summary": "Global LIVE infrastructure iteration, maintenance, and performance optimization."
+    },
+    "bytedance_ecom": {
+      "role": "Backend Engineer · E-Commerce Marketing",
+      "summary": "Interactive marketing systems and campaign delivery platform."
+    },
+    "bytedance_edu": {
+      "role": "Backend Engineer · Education",
+      "summary": "Building and iterating account systems and user information infrastructure."
+    }
+  },
   "upcoming": {
     "total": "total 4",
     "inProgress": "[in-progress]",
