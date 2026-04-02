@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import LocaleProvider from "./components/LocaleProvider";
+import Navbar from "./components/Navbar";
 import enMessages from "../messages/en.json";
 import zhMessages from "../messages/zh.json";
 import "./globals.css";
@@ -64,7 +65,7 @@ export default function RootLayout({
               "givenName": "Harold",
               "familyName": "Guo",
               "url": "https://haroldguo.com",
-              "image": "https://haroldguo.com/avatar.png",
+              "image": "https://haroldguo.com/avatar.jpg",
               "email": "guohaonan980421@gmail.com",
               "jobTitle": [
                 "AI Agent Engineer",
@@ -107,7 +108,10 @@ export default function RootLayout({
       <body className="antialiased">
         <LocaleProvider messages={messages}>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-            {children}
+            <Navbar />
+            <div className="pt-14">
+              {children}
+            </div>
           </ThemeProvider>
         </LocaleProvider>
       </body>

@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { Play, ExternalLink, X } from "lucide-react";
+import { Play, ExternalLink } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
+import Lightbox from "./Lightbox";
 
 interface ProjectCardProps {
   title: string;
@@ -210,59 +211,14 @@ export default function ProjectCard({
     </motion.div>
 
     {/* Lightbox */}
-    <AnimatePresence>
-      {lightboxOpen && imageUrl && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          onClick={() => setLightboxOpen(false)}
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 9999,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "rgba(0,0,0,0.85)",
-            cursor: "zoom-out",
-            padding: "2rem",
-          }}
-        >
-          <button
-            onClick={(e) => { e.stopPropagation(); setLightboxOpen(false); }}
-            style={{
-              position: "absolute",
-              top: "1.5rem",
-              right: "1.5rem",
-              color: "white",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            <X size={28} />
-          </button>
-          <motion.img
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            src={imageUrl}
-            alt={title}
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              maxWidth: "90vw",
-              maxHeight: "90vh",
-              objectFit: "contain",
-              borderRadius: "12px",
-              cursor: "default",
-            }}
-          />
-        </motion.div>
-      )}
-    </AnimatePresence>
+    {imageUrl && (
+      <Lightbox
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        src={imageUrl}
+        alt={title}
+      />
+    )}
     </>
   );
 }

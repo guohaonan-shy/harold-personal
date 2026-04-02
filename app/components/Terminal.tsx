@@ -2,8 +2,6 @@
 
 import { ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import ThemeToggle from "./ThemeToggle";
-import LanguageToggle from "./LanguageToggle";
 
 export default function Terminal() {
   const t = useTranslations("terminal");
@@ -14,14 +12,7 @@ export default function Terminal() {
         <div className="w-3 h-3 rounded-full bg-terminal-red" />
         <div className="w-3 h-3 rounded-full bg-terminal-yellow" />
         <div className="w-3 h-3 rounded-full bg-terminal-green" />
-        
-        <div className="flex-1" />
-        
-        {/* Language Toggle */}
-        <LanguageToggle />
-        
-        {/* Theme Toggle */}
-        <ThemeToggle />
+        <span className="flex-1 text-center text-xs font-mono text-dim">~/harold/status</span>
       </div>
       
       {/* Terminal Body */}

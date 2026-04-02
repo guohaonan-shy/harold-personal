@@ -16,7 +16,7 @@ export default function Hero() {
           {/* Avatar */}
           <div className="w-32 h-32 rounded-full border-4 border-main/20 overflow-hidden bg-terminal shadow-xl group">
             <Image 
-              src="/avatar.png" 
+              src="/avatar.jpg" 
               alt="Harold"
               width={128}
               height={128}

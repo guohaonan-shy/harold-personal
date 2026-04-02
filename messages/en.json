@@ -66,6 +66,13 @@
       "newModules": "real-exam, writing & study modules"
     }
   },
+  "about": {
+    "greeting": "Beyond the work...",
+    "bio": "When I'm not shipping code, you'll find me <green>exploring new cities</green> with a camera in hand, hunting for the best local coffee, and collecting moments from every corner of the world. I believe great products come from people who stay <green>curious about life</green> beyond the screen."
+  },
+  "gallery": {
+    "title": "Moments"
+  },
   "footer": {
     "copyright": "© 2026 Harold. All systems operational."
   }
