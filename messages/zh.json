@@ -24,7 +24,10 @@
   },
   "openSource": {
     "excalidrawer": {
-      "description": "代码优先的 Excalidraw 图表生成工具，内置模板、CLI 和 SVG/PNG 导出。支持 Claude Code、Copilot、Cursor 等 30+ AI 助手。"
+      "description": "代码优先的 Excalidraw 图表生成工具，提供 library、MCP server 和 CLI 三种形态，支持 SVG/PNG 导出。兼容 Claude Code、Copilot、Cursor 等 30+ AI 助手。"
+    },
+    "haroldSkills": {
+      "description": "我的个人 Claude Code skills 合集 —— 一个可复用的 Agent 工作流与插件市场，涵盖从临床研究流水线到日常自动化等场景，为 AI 编码助手赋能。"
     }
   },
   "experience": {
@@ -54,10 +57,12 @@
     }
   },
   "upcoming": {
-    "total": "共 4 个",
+    "total": "共 3 个",
     "inProgress": "[进行中]",
     "planned": "[计划中]",
     "building": "[开发中]",
+    "iterating": "[迭代中]",
+    "openBeta": "[公开测试]",
     "details": {
       "researching": "方案调研",
       "uiCompleted": "UI设计完成",

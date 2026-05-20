@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Wire Tailwind's `dark:` variant to the `.dark` class (next-themes class strategy).
+   Without this, `dark:` defaults to prefers-color-scheme and breaks when the OS is
+   light but the site is toggled dark — e.g. `dark:invert` on logo SVGs never fires. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-family-mono: "JetBrains Mono", monospace;
   --font-family-sans: "Inter", sans-serif;

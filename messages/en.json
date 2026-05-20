@@ -24,7 +24,10 @@
   },
   "openSource": {
     "excalidrawer": {
-      "description": "Code-first Excalidraw diagram generation with built-in templates, CLI, and SVG/PNG export. Works with Claude Code, Copilot, Cursor, and 30+ AI assistants."
+      "description": "Code-first Excalidraw diagram generation, available as a library, MCP server, and CLI with SVG/PNG export. Works with Claude Code, Copilot, Cursor, and 30+ AI assistants."
+    },
+    "haroldSkills": {
+      "description": "My personal collection of Claude Code skills — a marketplace of reusable agent workflows and plugins, from clinical research pipelines to everyday automation for AI coding assistants."
     }
   },
   "experience": {
@@ -54,10 +57,12 @@
     }
   },
   "upcoming": {
-    "total": "total 4",
+    "total": "total 3",
     "inProgress": "[in-progress]",
     "planned": "[planned]",
     "building": "[building]",
+    "iterating": "[iterating]",
+    "openBeta": "[open beta]",
     "details": {
       "researching": "researching solution",
       "uiCompleted": "UI completed",

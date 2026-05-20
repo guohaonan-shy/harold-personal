@@ -24,7 +24,17 @@ const projects: OpenSourceProject[] = [
     language: "JavaScript",
     languageColor: "#f1e05a",
     stars: 3,
-    tags: ["CLI", "Diagrams", "AI Agents"],
+    tags: ["Lib", "MCP", "CLI"],
+  },
+  {
+    name: "harold-skills",
+    descKey: "haroldSkills",
+    repo: "guohaonan-shy/harold-skills",
+    link: "https://github.com/guohaonan-shy/harold-skills",
+    language: "Python",
+    languageColor: "#3572A5",
+    stars: 0,
+    tags: ["Claude Code", "Skills", "AI Agents"],
   },
 ];
 

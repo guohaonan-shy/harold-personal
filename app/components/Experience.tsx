@@ -91,9 +91,9 @@ export default function Experience() {
               >
                 <div className="flex items-center justify-center gap-1.5">
                   {exp.icon ? (
-                    <GraduationCap className="h-5 w-5 text-dim/70" />
+                    <GraduationCap className="h-5 w-5 text-neutral-500 dark:text-neutral-300" />
                   ) : (
-                    <img src={exp.logo} alt={exp.company} className="h-5 w-auto opacity-70 dark:invert" />
+                    <img src={exp.logo} alt={exp.company} className="h-5 w-auto opacity-90 dark:invert" />
                   )}
                   <span className="text-main font-bold text-sm group-hover:text-terminal-green transition-colors">
                     {exp.company}
@@ -118,7 +118,7 @@ export default function Experience() {
                   {/* Dashed line to next node */}
                   {index < experiences.length - 1 && (
                     <div
-                      className="absolute top-1/2 -translate-y-1/2 h-[2px] border-t-2 border-dashed border-dim/30 z-0"
+                      className="absolute top-1/2 -translate-y-1/2 h-[2px] border-t-2 border-dashed border-neutral-300 dark:border-neutral-700 z-0"
                       style={{ left: "50%", width: "100%" }}
                     />
                   )}
@@ -128,7 +128,7 @@ export default function Experience() {
                     className={`relative w-4 h-4 rounded-full z-10 ${
                       exp.current
                         ? "bg-terminal-green shadow-[0_0_12px_rgba(39,201,63,0.5)]"
-                        : "border-2 border-black dark:border-white bg-page"
+                        : "bg-neutral-600 dark:bg-neutral-400"
                     }`}
                   />
 

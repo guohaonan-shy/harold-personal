@@ -6,15 +6,14 @@ import TypewriterTitle from "./TypewriterTitle";
 
 interface UpcomingProject {
   name: string;
-  statusKey: "inProgress" | "planned" | "building";
+  statusKey: "inProgress" | "planned" | "building" | "iterating" | "openBeta";
   detailKey?: string;
 }
 
 const upcomingProjects: UpcomingProject[] = [
-  { name: "TOEFLAIR", statusKey: "building", detailKey: "newModules" },
-  { name: "RedActFlow", statusKey: "building", detailKey: "betaTesting" },
-  { name: "Study-Abroad-Agent", statusKey: "planned", detailKey: "launchingMayJun" },
-  { name: "More-cool-things", statusKey: "planned" },
+  { name: "TOEFLAIR", statusKey: "iterating" },
+  { name: "RedActFlow", statusKey: "openBeta" },
+  { name: "More-cool-things", statusKey: "building" },
 ];
 
 function StatusIcon({ status }: { status: string }) {
@@ -34,7 +33,7 @@ function StatusIcon({ status }: { status: string }) {
   }
   
   return (
-    <span className="font-mono inline-block w-5 text-terminal-green mr-2">
+    <span className="font-mono inline-block w-5 mr-2">
       {frames[frame]}
     </span>
   );
@@ -43,6 +42,8 @@ function StatusIcon({ status }: { status: string }) {
 const statusStyles = {
   inProgress: "text-terminal-green",
   building: "text-amber-500/80",
+  iterating: "text-terminal-green",
+  openBeta: "text-terminal-cyan",
   planned: "text-dim/40",
 };
 
