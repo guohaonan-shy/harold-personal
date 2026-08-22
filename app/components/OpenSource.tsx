@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Github, Star, ExternalLink } from "lucide-react";
 import TypewriterTitle from "./TypewriterTitle";
+import { useSectionEntrance } from "./useSectionEntrance";
 
 interface OpenSourceProject {
   name: string;
@@ -40,6 +41,7 @@ const projects: OpenSourceProject[] = [
 
 export default function OpenSource() {
   const t = useTranslations("openSource");
+  const { entranceClass, onPromptDone } = useSectionEntrance();
 
   return (
     <section className="bg-gradient-section border-t border-light">
@@ -48,6 +50,7 @@ export default function OpenSource() {
           path="~/repos"
           user="harold"
           command="ls --starred"
+          onComplete={onPromptDone}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -57,7 +60,7 @@ export default function OpenSource() {
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block p-6 rounded-xl border border-main bg-card hover:border-terminal-green/40 transition-all duration-300 animate-fadeIn"
+              className={`group block p-6 rounded-xl border border-main bg-card hover:border-terminal-green/40 transition-all duration-300 ${entranceClass}`}
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Header */}

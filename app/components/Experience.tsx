@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { GraduationCap } from "lucide-react";
 import TypewriterTitle from "./TypewriterTitle";
+import { useSectionEntrance } from "./useSectionEntrance";
 
 interface ExperienceItem {
   hash: string;
@@ -69,6 +70,7 @@ const experiences: ExperienceItem[] = [
 
 export default function Experience() {
   const t = useTranslations("experience");
+  const { entranceClass, onPromptDone } = useSectionEntrance();
 
   return (
     <section className="bg-gradient-section border-t border-light">
@@ -77,6 +79,7 @@ export default function Experience() {
           path="~/career"
           user="harold"
           command="ls --graph"
+          onComplete={onPromptDone}
         />
 
         {/* Desktop: Horizontal timeline */}
@@ -86,7 +89,7 @@ export default function Experience() {
             {experiences.map((exp, index) => (
               <div
                 key={index}
-                className="flex flex-col items-center text-center px-2 group animate-fadeIn"
+                className={`flex flex-col items-center text-center px-2 group ${entranceClass}`}
                 style={{ animationDelay: `${index * 120}ms` }}
               >
                 <div className="flex items-center justify-center gap-1.5">
@@ -112,7 +115,7 @@ export default function Experience() {
               {experiences.map((exp, index) => (
                 <div
                   key={index}
-                  className="relative flex items-center justify-center animate-fadeIn"
+                  className={`relative flex items-center justify-center ${entranceClass}`}
                   style={{ animationDelay: `${index * 120}ms` }}
                 >
                   {/* Dashed line to next node */}
@@ -150,7 +153,7 @@ export default function Experience() {
             {experiences.map((exp, index) => (
               <div
                 key={index}
-                className="flex flex-col items-center text-center px-2 animate-fadeIn"
+                className={`flex flex-col items-center text-center px-2 ${entranceClass}`}
                 style={{ animationDelay: `${index * 120}ms` }}
               >
                 <span className="text-terminal-yellow/70 text-[10px]">
@@ -171,7 +174,7 @@ export default function Experience() {
             {experiences.map((exp, index) => (
               <div
                 key={index}
-                className="flex flex-col items-center text-center px-3 animate-fadeIn"
+                className={`flex flex-col items-center text-center px-3 ${entranceClass}`}
                 style={{ animationDelay: `${index * 120}ms` }}
               >
                 <span className="text-dim/60 text-xs leading-relaxed">
@@ -187,7 +190,7 @@ export default function Experience() {
           {[...experiences].reverse().map((exp, index) => (
             <div
               key={index}
-              className="flex gap-4 group animate-fadeIn"
+              className={`flex gap-4 group ${entranceClass}`}
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Vertical line + node */}

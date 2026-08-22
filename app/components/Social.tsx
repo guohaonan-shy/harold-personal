@@ -4,6 +4,7 @@ import { Twitter, Github, ExternalLink, Mail, Linkedin, Youtube, TrendingUp } fr
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import TypewriterTitle from "./TypewriterTitle";
+import { useSectionEntrance } from "./useSectionEntrance";
 
 interface SocialLink {
   icon: React.ReactNode;
@@ -70,6 +71,7 @@ export default function Social({
 }: SocialProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const { entranceClass, onPromptDone } = useSectionEntrance();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -95,10 +97,11 @@ export default function Social({
     <section className="bg-gradient-section border-t border-light">
       <div className="max-w-7xl mx-auto px-8 lg:px-[120px] py-16">
         {/* Section Title */}
-        <TypewriterTitle 
+        <TypewriterTitle
           path="~/social"
           user="harold"
           command="show --all"
+          onComplete={onPromptDone}
         />
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
@@ -110,7 +113,7 @@ export default function Social({
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 font-mono text-base hover:opacity-80 transition-opacity animate-fadeIn"
+                className={`flex items-center gap-3 font-mono text-base hover:opacity-80 transition-opacity ${entranceClass}`}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 {link.icon}
@@ -121,9 +124,9 @@ export default function Social({
           </div>
 
           {/* Right: GitHub Activity Card - Occupies 7 columns and extends right */}
-          <div 
-            className="lg:col-span-7 lg:-mr-[60px] relative group animate-fadeIn" 
-            style={{ 
+          <div
+            className={`lg:col-span-7 lg:-mr-[60px] relative group ${entranceClass}`}
+            style={{
               animationDelay: '400ms',
               perspective: '1000px'
             }}

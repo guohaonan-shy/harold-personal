@@ -155,7 +155,9 @@
     50.01%, 100% { opacity: 0; }
   }
   
-  /* Hero boot 编排:水合前由 html[data-boot] 隐藏待动画元素(head 内联脚本置位,reduced-motion/无 JS 不置位) */
+  /* 水合前的共用隐藏态(Hero boot 与各 section 的 prompt 门控):
+     html[data-boot] 由 head 内联脚本置位,reduced-motion/无 JS 不置位——那两种情况内容直接可见。
+     data-boot 在水合时被 useHeroBoot 移除,之后的隐藏由各编排状态自行接管(useSectionEntrance) */
   html[data-boot] .boot-hide {
     opacity: 0;
   }
@@ -185,6 +187,14 @@
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* reduced-motion:入场动画整体跳过,内容直接就位 */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fadeIn {
+      animation: none;
+      opacity: 1;
+    }
   }
 
   /* CRT Scanline Effect */

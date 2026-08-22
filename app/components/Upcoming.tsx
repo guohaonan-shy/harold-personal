@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import TypewriterTitle from "./TypewriterTitle";
+import { useSectionEntrance } from "./useSectionEntrance";
 
 interface UpcomingProject {
   name: string;
@@ -49,24 +50,26 @@ const statusStyles = {
 
 export default function Upcoming() {
   const t = useTranslations("upcoming");
-  
+  const { entranceClass, pendingClass, onPromptDone } = useSectionEntrance();
+
   return (
     <section className="bg-gradient-section border-t border-light">
       <div className="max-w-7xl mx-auto px-8 lg:px-[120px] py-16">
         {/* Section Title */}
-        <TypewriterTitle 
+        <TypewriterTitle
           path="~/crafts"
           user="harold"
           command="ls --future"
+          onComplete={onPromptDone}
         />
-        
+
         {/* Upcoming List */}
         <div className="font-mono text-base space-y-4">
-          <p className="text-dim text-sm mb-6">{t("total")}</p>
+          <p className={`text-dim text-sm mb-6 ${pendingClass}`}>{t("total")}</p>
           {upcomingProjects.map((project, index) => (
-            <div 
+            <div
               key={index}
-              className="flex items-center group animate-fadeIn"
+              className={`flex items-center group ${entranceClass}`}
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="flex items-center flex-1">

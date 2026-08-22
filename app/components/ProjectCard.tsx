@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Lightbox from "./Lightbox";
 
 interface ProjectCardProps {
+  /** section prompt 打完后置 true,卡片入场动画以此为触发(不再各自 whileInView) */
+  revealed?: boolean;
   title: string;
   description: string;
   tags: string[];
@@ -18,6 +20,7 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({
+  revealed = false,
   title,
   description,
   tags,
@@ -29,6 +32,10 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   const t = useTranslations("projects");
   const [isHovered, setIsHovered] = useState(false);
+  // 只在 transition 里使用,不影响 SSR 标记,无水合不一致
+  const [reducedMotion] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [isReady, setIsReady] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
@@ -95,9 +102,8 @@ export default function ProjectCard({
     <>
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: reducedMotion ? 0 : 0.6, ease: "easeOut" }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className="rounded-2xl bg-card overflow-hidden transition-all duration-300"
