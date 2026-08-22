@@ -1,6 +1,7 @@
 {
   "hero": {
-    "title": "用 AI 抹平失败的成本，<br></br>去创造真正有价值的<green>事物。</green>",
+    "titleLine1": "用 AI 抹平失败的成本，",
+    "titleLine2": "去创造真正有价值的<green>事物。</green>",
     "subtitle": "受 AI 演进启发~",
     "description": "嗨，我是 <name>Harold</name>。我认为技术不应是护城河或障碍，而是修复问题的<green>扳手</green>。我利用 AI 从重复中解脱，专注于解决我所遇到的挑战——并以此帮助那些面对<green>同样问题</green>的人。",
     "description2": "与其在大型组织中耗神弥合认知差距，我选择回归<green>创造者的本能</green>：<br></br>专注于快速交付，并将每一处细节打磨至<green>极致的体验。</green>",
