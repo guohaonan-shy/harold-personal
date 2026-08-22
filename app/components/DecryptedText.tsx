@@ -43,23 +43,7 @@ function DecryptedText({
   const previousText = useRef(text);
   const animationRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    if (animateOnMount) startAnimation(text);
-    // 仅挂载时执行一次
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (text !== previousText.current) {
-      setIsAnimating(true);
-      startAnimation(text);
-      previousText.current = text;
-    }
-    return () => {
-      if (animationRef.current) cancelAnimationFrame(animationRef.current);
-    };
-  }, [text]);
-
+  // 声明须在下方两个 effect 之前:两者都在挂载/text 变化时同步调用它
   const startAnimation = (targetText: string) => {
     let iteration = 0;
     const startTime = performance.now();
@@ -113,6 +97,23 @@ function DecryptedText({
 
     animationRef.current = requestAnimationFrame(animate);
   };
+
+  useEffect(() => {
+    if (animateOnMount) startAnimation(text);
+    // 仅挂载时执行一次
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (text !== previousText.current) {
+      setIsAnimating(true);
+      startAnimation(text);
+      previousText.current = text;
+    }
+    return () => {
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, [text]);
 
   return (
     <span className={`${className} ${isAnimating ? "font-mono" : ""}`}>

@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { afterAll, afterEach, beforeAll, describe, expect, inject, test } from "vitest";
 import {
   AVATAR_TOGGLE_LABEL,
@@ -396,6 +398,109 @@ describe("首页动效系统(spec home-motion-upgrade §5)", () => {
         BOOT_CMD
       );
       expect(res).toEqual([]);
+    });
+  });
+
+  test("8. chunk 加载失败兜底(watchdog fail-open):应用 bundle 被阻断、hydration 永不到来时,内联脚本仍在预算内摘除 data-boot", async () => {
+    // JS 开(内联脚本会跑),但全部 <script src> 网络请求被拦——模拟部署错位/断网导致
+    // 应用 chunk 永远加载不到、hydration 永不发生(区别于用例 7 的「整段禁 JS」)
+    page = await newPage(browser, { blockScripts: true });
+    await gotoHome(page, baseUrl);
+    await withArtifacts(page, "chunk-blocked-failopen", async () => {
+      // 前提:内联脚本确实跑了、data-boot 确实被置位(否则下面的断言无意义)
+      expect(
+        await page.evaluate(() => document.documentElement.hasAttribute("data-boot")),
+        "内联脚本未置位 data-boot(用例前提不成立,并非在测 watchdog)"
+      ).toBe(true);
+
+      // hydration 永不会发生:watchdog(2.5s)触发前不该提前达到终态
+      const early = await pollHeroFinal(page, 800);
+      expect(
+        early.ok,
+        "chunk 被阻断的情况下不该这么早就达到终态——watchdog 是否提前触发了?"
+      ).toBe(false);
+
+      // watchdog 兜底:即便没有 hydration,内容也必须在预算内 fail-open 恢复可见
+      // (2.5s watchdog + 富余,4s 内必须达到终态;pollHeroFinal 用页面自身 rAF 轮询)
+      const res = await pollHeroFinal(page, 4000);
+      expect(res.ok, `watchdog 超时后仍未 fail-open:${res.why}`).toBe(true);
+      expect(
+        await page.evaluate(() => document.documentElement.hasAttribute("data-boot")),
+        "watchdog 后 data-boot 应已被摘除"
+      ).toBe(false);
+
+      // 内容确实是"整页可见"而非仅通过了终态探针的个别字段:全部静态 boot-hide 分支
+      // 组件(未 hydrate,SSR 静态 HTML)最终都应有效可见。这些卡片元素自带
+      // `transition-all duration-300`(hover 用途),opacity 规则解除的瞬间不会
+      // 立即到位,给够一个 transition 周期的余量再判定,避免采样到过渡中间态。
+      const findHidden = () =>
+        page.evaluate(() => {
+          const eff = (el) => {
+            let o = 1;
+            for (let n = el; n && n !== document.documentElement; n = n.parentElement)
+              o *= parseFloat(getComputedStyle(n).opacity || "1");
+            return o;
+          };
+          const hidden = [];
+          document.querySelectorAll("main > section").forEach((section, i) => {
+            for (const el of section.querySelectorAll("*")) {
+              if (!el.textContent.trim() || el.children.length > 0) continue;
+              if (el.getClientRects().length === 0) continue;
+              if (eff(el) < 0.3) hidden.push(`section[${i}]: ${el.textContent.trim().slice(0, 30)}`);
+            }
+          });
+          return hidden;
+        });
+      await expect
+        .poll(findHidden, { timeout: 1000, interval: 50 })
+        .toEqual([]);
+    });
+  });
+
+  test("9. WebGL 引擎 chunk 加载失败:头像回退静态 ASCII,不停留成空白方块", async () => {
+    // 只拦「初始 HTML 里没有声明过」的 <script> 请求——即运行时才发起的懒加载 chunk。
+    // 本仓库首页唯一的客户端懒加载是 CharFieldCanvas 的 import("./engine"),
+    // 核心应用 bundle(初始 HTML 自带的 <script src>)不受影响,hydration 正常发生。
+    const indexHtml = readFileSync(resolve("out/index.html"), "utf8");
+    const knownScripts = new Set(
+      [...indexHtml.matchAll(/<script[^>]+\bsrc="([^"]+)"/g)].map((m) => m[1])
+    );
+    page = await newPage(browser, {
+      shouldBlockRequest: (req) => {
+        if (req.resourceType() !== "script") return false;
+        const { pathname } = new URL(req.url());
+        return !knownScripts.has(pathname);
+      },
+    });
+    await gotoHome(page, baseUrl);
+    await withArtifacts(page, "engine-chunk-blocked", async () => {
+      // hydration 正常发生、boot 编排正常跑完(核心 bundle 未受影响)
+      await waitForHeroFinal(page);
+
+      // engine chunk 请求被拒 → CharFieldCanvas 的 import().catch 应调用 onUnavailable,
+      // AsciiAvatarCard 降级为 static 模式:静态 ASCII <pre> 出现,canvas 不残留
+      await expect
+        .poll(() => page.evaluate(() => !!document.querySelector("main section pre")), {
+          timeout: 5000,
+          interval: 100,
+        })
+        .toBe(true);
+
+      const state = await page.evaluate(() => {
+        const hero = document.querySelector("main section");
+        const pre = hero.querySelector("pre");
+        return {
+          hasCanvas: !!hero.querySelector("canvas"),
+          hasPre: !!pre,
+          preLength: pre ? pre.textContent.length : 0,
+        };
+      });
+      expect(
+        state.hasCanvas,
+        "engine 不可用时不该残留 canvas(那正是「空白方块」bug 的成因)"
+      ).toBe(false);
+      expect(state.hasPre, "engine 不可用时应回退到静态 ASCII pre").toBe(true);
+      expect(state.preLength, "回退的 ASCII 内容异常短").toBeGreaterThan(500);
     });
   });
 });

@@ -42,6 +42,12 @@ export async function newPage(browser, opts = {}) {
     reducedMotion = false,
     theme, // 'light' | 'dark' | undefined(站点默认 dark)
     js = true,
+    // 阻断全部同源 <script> 网络请求(内联脚本不受影响,不走网络):
+    // 用于复现「应用 chunk 加载失败/hydration 永不到来」场景(F-1 watchdog)
+    blockScripts = false,
+    // 细粒度请求拦截:(req) => boolean,true 则 abort。在 blockScripts 之前判定,
+    // 用于只阻断某一个懒加载 chunk(如 F-2 的 charfield engine)而不阻断整个应用 bundle
+    shouldBlockRequest = null,
   } = opts;
 
   const context = await browser.createBrowserContext();
@@ -98,8 +104,19 @@ export async function newPage(browser, opts = {}) {
   await page.setRequestInterception(true);
   page.on("request", (req) => {
     const { hostname } = new URL(req.url());
-    if (hostname === "127.0.0.1" || hostname === "localhost") req.continue();
-    else req.abort();
+    if (hostname !== "127.0.0.1" && hostname !== "localhost") {
+      req.abort();
+      return;
+    }
+    if (shouldBlockRequest && shouldBlockRequest(req)) {
+      req.abort();
+      return;
+    }
+    if (blockScripts && req.resourceType() === "script") {
+      req.abort();
+      return;
+    }
+    req.continue();
   });
 
   return page;

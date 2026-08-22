@@ -29,3 +29,11 @@
 ## 选中的存量回归
 
 无 test-cases 库——**本刀交付的就是这个仓库第一份浏览器级回归套件**。既有真实套件(Next 静态导出构建、ESLint、01 的生成器单元测试)保持绿即可。
+
+## 决策记录(实现期补记)
+
+**ESLint 9 flat-config 迁移**(`eslint.config.mjs` 新增,`npm run lint` 从 `next lint` 改为 `eslint .`):不在本 ticket 原始范围内,是「既有构建与 lint 保持绿」这条验收标准逼出来的工具性使能——Next 16 移除了 `next lint`,不迁移 `npm run lint` 就无法运行。round-1 codex-review 指出这是未申报的 scope expansion,在此补记为决策而非事后默许。
+
+迁移带出的连带变更:
+- `scripts/generate-sitemap.js`(CommonJS,`require()`)被新 flat config 的 `@typescript-eslint/no-require-imports` 规则命中;`eslint.config.mjs` 为 `scripts/**/*.js` 加了针对性 override 关闭该规则,不动全局默认。
+- flat config 首次启用 `react-hooks/immutability`、`react-hooks/set-state-in-effect`、`@typescript-eslint/ban-ts-comment` 三条规则,命中 `DecryptedText.tsx`、`ProjectCard.tsx`、`ThemeToggle.tsx`、`TypewriterTitle.tsx` 四个文件里长期存在、与本次改动无关的代码模式。三条规则的 warn 降级通过 `eslint.config.mjs` 的 `files` override **精确圈定到这四个文件**,不做仓库级 default 降级;这四个文件之外(含本刀新增的 `useHeroBoot.ts`、`AsciiAvatarCard.tsx` 等)一律保持 error,新代码触发的告警在实现期已逐条改掉,不依赖 warn 豁免。

@@ -80,18 +80,19 @@ export function useHeroBoot(): HeroBoot {
     const scale = window.matchMedia("(pointer: coarse)").matches
       ? MOBILE_SCALE
       : 1;
-    setState({ active: true, typed: 0, cuesPassed: 0, scale });
 
     const start = performance.now();
+    // 激活态的置位挪到首帧 rAF 回调里(而不是效果体内直接调用),避免 cascading
+    // render 告警;仍在下一帧内完成,数十毫秒预算内可忽略不计
     const tick = (now: number) => {
       // 归一化到桌面基准时间轴,cue 表不用按档位换算
       const elapsed = (now - start) / scale;
       const typed = Math.min(BOOT_COMMAND.length, Math.floor(elapsed / TYPE_MS));
       const cuesPassed = CUE_ORDER.filter((c) => elapsed >= BOOT_CUES[c]).length;
       setState((prev) =>
-        prev.typed === typed && prev.cuesPassed === cuesPassed
+        prev.active && prev.typed === typed && prev.cuesPassed === cuesPassed
           ? prev
-          : { ...prev, typed, cuesPassed }
+          : { active: true, typed, cuesPassed, scale }
       );
       if (elapsed < BOOT_CUES.done) {
         rafRef.current = requestAnimationFrame(tick);

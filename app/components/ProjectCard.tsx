@@ -46,6 +46,34 @@ export default function ProjectCard({
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const canPlayRef = React.useRef(false);
   const startTimeRef = React.useRef<number>(0);
+  const coarseTriggeredRef = React.useRef(false);
+  const coarseObserverRef = React.useRef<IntersectionObserver | null>(null);
+
+  /**
+   * 粗指针(spec §4「移动端…hover 触发的效果改为进入视口触发一次」)设备没有 hover:
+   * onMouseEnter/Leave 永不触发,isHovered 常驻 false,"visit project" 外链胶囊
+   * 因此永远不可达。用回调 ref(而非 useEffect + 固定 ref 对象)是因为卡片根节点
+   * 会在 motionReady 分支切换(静态 boot-hide div ↔ framer motion.div)时被整体替换,
+   * 回调 ref 能在节点重挂载时重新绑定 observer;仅触发一次,不随滚出视口撤回。
+   */
+  const setCardNode = React.useCallback((node: HTMLDivElement | null) => {
+    coarseObserverRef.current?.disconnect();
+    coarseObserverRef.current = null;
+    if (!node || coarseTriggeredRef.current) return;
+    if (!window.matchMedia("(pointer: coarse)").matches) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          coarseTriggeredRef.current = true;
+          setIsHovered(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    io.observe(node);
+    coarseObserverRef.current = io;
+  }, []);
 
   React.useEffect(() => {
     if (isReady) {
@@ -215,12 +243,14 @@ export default function ProjectCard({
     <>
     {motionReady ? (
       <motion.div
+        ref={setCardNode}
         initial={{ opacity: 0, y: 20 }}
         animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         // reduced-motion 不会进本分支(motionReady 恒 false),无需归零时长
         transition={{ duration: 0.6, ease: "easeOut" }}
         onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        // 粗指针触摸偶发的合成 mouseleave 不该撤销"进视口一次性触发"的状态
+        onMouseLeave={() => !coarseTriggeredRef.current && setIsHovered(false)}
         className="rounded-2xl bg-card overflow-hidden transition-all duration-300"
         style={{ border: "1px solid rgba(128,128,128,0.3)" }}
       >
@@ -230,9 +260,10 @@ export default function ProjectCard({
       // 静态分支:boot-hide 只在 html[data-boot](JS 开、boot 编排接管前)时隐藏,
       // 无 JS / reduced-motion 下内容直接可见
       <div
+        ref={setCardNode}
         className="boot-hide rounded-2xl bg-card overflow-hidden transition-all duration-300"
         onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        onMouseLeave={() => !coarseTriggeredRef.current && setIsHovered(false)}
         style={{ border: "1px solid rgba(128,128,128,0.3)" }}
       >
         {cardBody}

@@ -40,15 +40,19 @@ function TypewriterTitle({
     const element = ref.current;
     if (!element || hasStarted.current) return;
 
-    // reduced-motion:跳过打字,标题完整显示并立即发完成信号
+    // reduced-motion:跳过打字,标题完整显示并立即发完成信号。
+    // setState 挪到 rAF 回调里触发(而不是效果体内直接调用),避免 cascading render 告警;
+    // 单帧(~16ms)延迟在打字动效的时间预算里可忽略不计。
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       hasStarted.current = true;
-      setDisplayedPath(path);
-      setDisplayedUser(user);
-      setDisplayedCommand(command);
-      setIsTypingComplete(true);
-      onCompleteRef.current?.();
-      return;
+      const raf = requestAnimationFrame(() => {
+        setDisplayedPath(path);
+        setDisplayedUser(user);
+        setDisplayedCommand(command);
+        setIsTypingComplete(true);
+        onCompleteRef.current?.();
+      });
+      return () => cancelAnimationFrame(raf);
     }
 
     const observer = new IntersectionObserver(

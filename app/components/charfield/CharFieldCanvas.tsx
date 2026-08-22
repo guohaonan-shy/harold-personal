@@ -93,20 +93,24 @@ function CharFieldCanvas({ settleAt, onUnavailable }: CharFieldCanvasProps) {
     };
     ctrlRef.current = { applySettle, applyTheme, wake };
 
-    import("./engine").then(({ CharFieldEngine: Engine }) => {
-      if (disposed) return;
-      let engine: CharFieldEngine;
-      try {
-        engine = new Engine(canvas, asciiAvatar.cols, asciiAvatar.rows);
-      } catch {
-        unavailableRef.current();
-        return;
-      }
-      engineRef.current = engine;
-      applyTheme();
-      engine.setSize(wrap.clientWidth, wrap.clientHeight);
-      applySettle();
-    });
+    // chunk 加载被拒(离线/部署错位/脚本拦截器)与构造后续步骤抛错都必须走 onUnavailable
+    // 静态回退,而不是让引擎半初始化、canvas 停留成一块无特征方块。
+    import("./engine")
+      .then(({ CharFieldEngine: Engine }) => {
+        if (disposed) return;
+        try {
+          const engine = new Engine(canvas, asciiAvatar.cols, asciiAvatar.rows);
+          engineRef.current = engine;
+          applyTheme();
+          engine.setSize(wrap.clientWidth, wrap.clientHeight);
+          applySettle();
+        } catch {
+          unavailableRef.current();
+        }
+      })
+      .catch(() => {
+        if (!disposed) unavailableRef.current();
+      });
 
     const ro = new ResizeObserver(() => {
       const engine = engineRef.current;
