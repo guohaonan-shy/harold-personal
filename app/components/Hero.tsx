@@ -2,8 +2,7 @@
 
 import { ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
-import Terminal from "./Terminal";
+import AsciiAvatarCard from "./AsciiAvatarCard";
 import DecryptedText from "./DecryptedText";
 
 export default function Hero() {
@@ -11,20 +10,8 @@ export default function Hero() {
   return (
     <section className="min-h-[800px] bg-gradient-section border-t border-light flex flex-col items-center">
       <div className="max-w-7xl mx-auto px-8 lg:px-[120px] py-[80px] w-full">
-        {/* Top Section: Avatar, Badge and Big Title */}
+        {/* Top Section: Badge and Big Title */}
         <div className="flex flex-col items-center text-center space-y-8 mb-16">
-          {/* Avatar */}
-          <div className="w-32 h-32 rounded-full border-4 border-main/20 overflow-hidden bg-terminal shadow-xl group">
-            <Image 
-              src="/avatar.jpg" 
-              alt="Harold"
-              width={128}
-              height={128}
-              priority
-              className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-            />
-          </div>
-          
           {/* Terminal Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-card border border-main/30 font-mono text-sm shadow-sm">
             <div className="w-2 h-2 rounded-full bg-terminal-green animate-pulse" />
@@ -68,8 +55,7 @@ export default function Hero() {
           {/* Hero Visual - Right column */}
           <div className="flex-1 w-full flex justify-center lg:justify-end">
             <div className="relative w-full max-w-[500px] transform lg:rotate-2 hover:rotate-0 transition-transform duration-700">
-              <Terminal />
-              {/* Removed blur-xl to improve GPU performance during scrolling */}
+              <AsciiAvatarCard />
             </div>
           </div>
         </div>

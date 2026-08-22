@@ -33,13 +33,13 @@ app/
   globals.css           # Tailwind v4 theme + custom CSS variables + animations
   lib/github.ts         # GitHub GraphQL API (6hr cache, avatar/commits/PRs)
   components/
-    Hero.tsx            # Landing: avatar, terminal badge, bio, DecryptedText
+    Hero.tsx            # Landing: terminal badge, bio, DecryptedText, ASCII avatar card
+    AsciiAvatarCard.tsx # ASCII avatar card (click toggles photo); consumes app/generated/ascii-avatar.ts
     Projects.tsx        # Main projects showcase section
     ProjectCard.tsx     # Project card: video demo, terminal header, hover anim
     Upcoming.tsx        # Upcoming/in-progress projects list
     Social.tsx          # Social links + GitHub activity card (3D hover)
     Footer.tsx          # Copyright footer
-    Terminal.tsx        # Decorative terminal widget (active projects status)
     TypewriterTitle.tsx # Terminal prompt typewriter animation
     DecryptedText.tsx   # Character decryption reveal animation
     ThemeToggle.tsx     # Light/dark switcher (View Transitions API)
