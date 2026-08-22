@@ -7,7 +7,7 @@ import { useSectionEntrance } from "./useSectionEntrance";
 
 export default function Projects() {
   const t = useTranslations("projects");
-  const { entered, onPromptDone } = useSectionEntrance();
+  const { entered, onPromptDone, motionReady } = useSectionEntrance();
 
   return (
     <section className="bg-gradient-section border-t border-light">
@@ -24,6 +24,7 @@ export default function Projects() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem" }}>
           <ProjectCard
             revealed={entered}
+            motionReady={motionReady}
             title="TOEFLAIR"
             description={t("toeflair.description")}
             tags={["AI", "Education", "Web"]}
@@ -34,6 +35,7 @@ export default function Projects() {
           />
           <ProjectCard
             revealed={entered}
+            motionReady={motionReady}
             title="RedActFlow"
             description={t("redactflow.description")}
             tags={["AI", "PDF", "Productivity", "Open Beta"]}

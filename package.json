@@ -10,7 +10,8 @@
     "postbuild": "node scripts/generate-sitemap.js",
     "start": "next start",
     "lint": "eslint .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:e2e": "npm run build && vitest run --config vitest.e2e.config.mts"
   },
   "overrides": {
     "@swc/helpers": "0.5.18"
@@ -37,6 +38,7 @@
     "jpeg-js": "^0.4.4",
     "pngjs": "^7.0.0",
     "postcss": "^8.5.6",
+    "puppeteer": "^24.39.1",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
     "vitest": "^4.1.11"

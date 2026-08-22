@@ -5,6 +5,7 @@
 
 # testing
 /coverage
+/tests/e2e/output/
 
 # next.js
 /.next/

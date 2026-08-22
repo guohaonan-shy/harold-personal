@@ -17,10 +17,15 @@ const useIsoLayoutEffect =
  */
 export function useSectionEntrance() {
   const [phase, setPhase] = useState<"ssr" | "gated" | "entered">("ssr");
+  // framer 入场分支可用:已水合且非 reduced-motion。SSR / 无 JS / reduced-motion
+  // 下保持 false——framer 会把 initial 的 opacity:0 内联进 SSR HTML,无 JS 访客
+  // 将永远看不到内容,所以这些形态必须走 boot-hide 的静态分支。
+  const [motionReady, setMotionReady] = useState(false);
 
   useIsoLayoutEffect(() => {
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setPhase((p) => (p === "ssr" ? "gated" : p));
+      setMotionReady(true);
     }
   }, []);
 
@@ -32,5 +37,5 @@ export function useSectionEntrance() {
     phase === "gated" ? "opacity-0" : phase === "ssr" ? "boot-hide" : "";
   const entranceClass = entered ? "animate-fadeIn" : pendingClass;
 
-  return { entered, entranceClass, pendingClass, onPromptDone };
+  return { entered, entranceClass, pendingClass, onPromptDone, motionReady };
 }

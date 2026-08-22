@@ -9,6 +9,12 @@ import Lightbox from "./Lightbox";
 interface ProjectCardProps {
   /** section prompt 打完后置 true,卡片入场动画以此为触发(不再各自 whileInView) */
   revealed?: boolean;
+  /**
+   * 已水合且非 reduced-motion 时置 true(来自 useSectionEntrance),才挂 framer 入场分支。
+   * false(SSR / 无 JS / reduced-motion)走 boot-hide 静态分支——framer 会把 initial
+   * 的 opacity:0 内联进 SSR HTML,无 JS 访客将永远看不到卡片。
+   */
+  motionReady?: boolean;
   title: string;
   description: string;
   tags: string[];
@@ -21,6 +27,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({
   revealed = false,
+  motionReady = false,
   title,
   description,
   tags,
@@ -32,10 +39,6 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   const t = useTranslations("projects");
   const [isHovered, setIsHovered] = useState(false);
-  // 只在 transition 里使用,不影响 SSR 标记,无水合不一致
-  const [reducedMotion] = useState(
-    () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [isReady, setIsReady] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
@@ -98,17 +101,8 @@ export default function ProjectCard({
     canPlayRef.current = true;
   }, []);
 
-  return (
+  const cardBody = (
     <>
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ duration: reducedMotion ? 0 : 0.6, ease: "easeOut" }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="rounded-2xl bg-card overflow-hidden transition-all duration-300"
-      style={{ border: "1px solid rgba(128,128,128,0.3)" }}
-    >
       {/* Card Header */}
       <div className="flex items-center gap-2 h-9 px-4 border-b border-main">
         <div className="w-2.5 h-2.5 rounded-full bg-terminal-red" />
@@ -214,7 +208,36 @@ export default function ProjectCard({
         </div>
         <p className="text-sm text-dim leading-[1.6]">{description}</p>
       </div>
-    </motion.div>
+    </>
+  );
+
+  return (
+    <>
+    {motionReady ? (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        // reduced-motion 不会进本分支(motionReady 恒 false),无需归零时长
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="rounded-2xl bg-card overflow-hidden transition-all duration-300"
+        style={{ border: "1px solid rgba(128,128,128,0.3)" }}
+      >
+        {cardBody}
+      </motion.div>
+    ) : (
+      // 静态分支:boot-hide 只在 html[data-boot](JS 开、boot 编排接管前)时隐藏,
+      // 无 JS / reduced-motion 下内容直接可见
+      <div
+        className="boot-hide rounded-2xl bg-card overflow-hidden transition-all duration-300"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        style={{ border: "1px solid rgba(128,128,128,0.3)" }}
+      >
+        {cardBody}
+      </div>
+    )}
 
     {/* Lightbox */}
     {imageUrl && (
