@@ -112,7 +112,7 @@ export default function ProjectCard({
       </div>
 
       {/* Visual Container */}
-      <div className="bg-page dark:bg-[#1A1A1A] relative overflow-hidden group" style={{ height: "360px" }}>
+      <div className="bg-page dark:bg-[#1A1A1A] relative overflow-hidden group" style={{ height: "230px" }}>
         {!isReady && !imageUrl && (
           <div className="absolute inset-0 z-10 flex flex-col items-center justify-center font-mono text-terminal-green bg-black/90">
             <div className="flex flex-col gap-2 w-64">

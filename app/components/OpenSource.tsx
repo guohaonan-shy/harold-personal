@@ -23,7 +23,7 @@ const projects: OpenSourceProject[] = [
     link: "https://github.com/guohaonan-shy/excalidrawer",
     language: "JavaScript",
     languageColor: "#f1e05a",
-    stars: 3,
+    stars: 8,
     tags: ["Lib", "MCP", "CLI"],
   },
   {

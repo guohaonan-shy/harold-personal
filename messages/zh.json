@@ -19,6 +19,9 @@
     "redactflow": {
       "description": "AI 驱动的 PDF 脱敏平台。自动检测敏感信息，结合人工审核，精准完成文档脱敏。"
     },
+    "excalidrawer": {
+      "description": "代码驱动的 Excalidraw 图表生成工具——CLI、MCP server 和 agent skills,把代码或意图直接转换成手绘风格的图表,不用打开浏览器手动拖拽。"
+    },
     "visitProject": "访问项目",
     "videoPlaceholder": "视频演示占位"
   },

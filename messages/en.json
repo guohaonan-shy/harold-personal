@@ -19,6 +19,9 @@
     "redactflow": {
       "description": "AI-powered PDF redaction platform. Detect sensitive data automatically, review with human-in-the-loop, and redact with precision."
     },
+    "excalidrawer": {
+      "description": "Code-first Excalidraw diagram generation — CLI, MCP server, and agent skills that turn code or intent into hand-drawn-style diagrams, no browser or manual dragging required."
+    },
     "visitProject": "Visit Project",
     "videoPlaceholder": "Video Demo Placeholder"
   },
