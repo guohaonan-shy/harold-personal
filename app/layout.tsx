@@ -55,6 +55,16 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+        {/* Hero boot 编排:首帧前置位 data-boot,CSS 据此隐藏待动画元素;reduced-motion 与无 JS 时不置位,页面直接呈现终态。
+            watchdog:置位的同时挂一个超过动画预算(1.4s boot 时间线)的兜底 setTimeout 移除,
+            防止应用 chunk 加载失败/hydration 缺席时门控永不解除、整页内容永久隐藏——
+            fail-open 优先于「不闪现」。正常路径下 useHeroBoot 的 layout-effect 移除更早触发,
+            watchdog 后到时 removeAttribute 已是幂等 no-op。 */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.setAttribute("data-boot","");setTimeout(function(){document.documentElement.removeAttribute("data-boot")},2500)}}catch(e){}`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

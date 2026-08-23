@@ -10,9 +10,21 @@ interface DecryptedTextProps {
   sequential?: boolean;
   revealDirection?: "start" | "end" | "center";
   useOriginalCharsOnly?: boolean;
+  /** true = 挂载即从乱码解密到 text(供 boot 编排使用;默认保持原行为:仅 text 变化时解密) */
+  animateOnMount?: boolean;
 }
 
 const GLYPHS = "ABCDEFGHIKLMNOPQRSTUVWYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
+
+const scrambled = (source: string) =>
+  source
+    .split("")
+    .map((char) =>
+      char === " " || char === "\n"
+        ? char
+        : GLYPHS[Math.floor(Math.random() * GLYPHS.length)]
+    )
+    .join("");
 
 function DecryptedText({
   text,
@@ -22,23 +34,16 @@ function DecryptedText({
   sequential = true,
   revealDirection = "start",
   useOriginalCharsOnly = false,
+  animateOnMount = false,
 }: DecryptedTextProps) {
-  const [displayText, setDisplayText] = useState(text);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [displayText, setDisplayText] = useState(() =>
+    animateOnMount ? scrambled(text) : text
+  );
+  const [isAnimating, setIsAnimating] = useState(animateOnMount);
   const previousText = useRef(text);
   const animationRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    if (text !== previousText.current) {
-      setIsAnimating(true);
-      startAnimation(text);
-      previousText.current = text;
-    }
-    return () => {
-      if (animationRef.current) cancelAnimationFrame(animationRef.current);
-    };
-  }, [text]);
-
+  // 声明须在下方两个 effect 之前:两者都在挂载/text 变化时同步调用它
   const startAnimation = (targetText: string) => {
     let iteration = 0;
     const startTime = performance.now();
@@ -92,6 +97,23 @@ function DecryptedText({
 
     animationRef.current = requestAnimationFrame(animate);
   };
+
+  useEffect(() => {
+    if (animateOnMount) startAnimation(text);
+    // 仅挂载时执行一次
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (text !== previousText.current) {
+      setIsAnimating(true);
+      startAnimation(text);
+      previousText.current = text;
+    }
+    return () => {
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, [text]);
 
   return (
     <span className={`${className} ${isAnimating ? "font-mono" : ""}`}>

@@ -1,16 +1,12 @@
 {
   "hero": {
-    "title": "Building What Matters, <green>Powered by AI.</green>",
+    "titleLine1": "Building What Matters,",
+    "titleLine2": "<green>Powered by AI.</green>",
     "subtitle": "Innovation in progress.",
     "description": "Hi, I'm <name>Harold</name>. I view technology not as a moat or a barrier, but as a <green>wrench</green> to fix what's broken. I use AI to automate the repetitive, allowing me to focus on solving my own challenges—and then helping those facing the <green>same problems.</green>",
-    "description2": "Instead of narrowing cognitive gaps in large hierarchies, I choose to spend my energy on <green>rapid creation</green> and crafting <br></br><green>seamless experiences.</green>"
-  },
-  "terminal": {
-    "active": "[ACTIVE]",
-    "crafting": "[CRAFTING]",
-    "toeflair": "TOEFLAIR: Building real-exam questions, writing & study modules...",
-    "mrsteady": "RedActFlow: Running beta with early access users...",
-    "status": "[STATUS] Ready for new challenges."
+    "description2": "Instead of narrowing cognitive gaps in large hierarchies, I choose to spend my energy on <green>rapid creation</green> and crafting <br></br><green>seamless experiences.</green>",
+    "avatarAlt": "Harold's portrait photo",
+    "avatarToggle": "Toggle avatar between ASCII art and photo"
   },
   "projects": {
     "toeflair": {
@@ -18,6 +14,9 @@
     },
     "redactflow": {
       "description": "AI-powered PDF redaction platform. Detect sensitive data automatically, review with human-in-the-loop, and redact with precision."
+    },
+    "excalidrawer": {
+      "description": "Turns code into hand-drawn Excalidraw diagrams — CLI, MCP server, and agent skills, no browser or manual dragging needed."
     },
     "visitProject": "Visit Project",
     "videoPlaceholder": "Video Demo Placeholder"

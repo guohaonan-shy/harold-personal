@@ -155,6 +155,29 @@
     50.01%, 100% { opacity: 0; }
   }
   
+  /* 水合前的共用隐藏态(Hero boot 与各 section 的 prompt 门控):
+     html[data-boot] 由 head 内联脚本置位,reduced-motion/无 JS 不置位——那两种情况内容直接可见。
+     data-boot 在水合时被 useHeroBoot 移除,之后的隐藏由各编排状态自行接管(useSectionEntrance) */
+  html[data-boot] .boot-hide {
+    opacity: 0;
+  }
+
+  html[data-boot] .boot-cmd {
+    visibility: hidden;
+  }
+
+  /* H1 尾部光标:闪两次后常灭(时长由内联 style 按移动端档位缩放) */
+  .boot-cursor-h1 {
+    animation: boot-blink-twice 210ms steps(1, end) forwards;
+  }
+
+  @keyframes boot-blink-twice {
+    0% { opacity: 1; }
+    33% { opacity: 0; }
+    67% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
   /* Lightweight fade-in animation */
   .animate-fadeIn {
     animation: fadeIn 0.4s ease-out forwards;
@@ -164,6 +187,14 @@
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* reduced-motion:入场动画整体跳过,内容直接就位 */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fadeIn {
+      animation: none;
+      opacity: 1;
+    }
   }
 
   /* CRT Scanline Effect */

@@ -8,6 +8,8 @@ interface TypewriterTitleProps {
   user?: string;
   command?: string;
   className?: string;
+  /** 打字完成(或 reduced-motion 下直接就位)时通知一次;section 内容入场以此为触发 */
+  onComplete?: () => void;
 }
 
 /**
@@ -15,11 +17,12 @@ interface TypewriterTitleProps {
  * Uses requestAnimationFrame and useRef to avoid React state lag.
  * Only triggers once when visible.
  */
-function TypewriterTitle({ 
-  path, 
-  user = "harold", 
-  command = "", 
-  className = "" 
+function TypewriterTitle({
+  path,
+  user = "harold",
+  command = "",
+  className = "",
+  onComplete,
 }: TypewriterTitleProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isTypingComplete, setIsTypingComplete] = useState(false);
@@ -27,10 +30,30 @@ function TypewriterTitle({
   const [displayedUser, setDisplayedUser] = useState("");
   const [displayedCommand, setDisplayedCommand] = useState("");
   const hasStarted = useRef(false);
+  const onCompleteRef = useRef(onComplete);
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   useEffect(() => {
     const element = ref.current;
     if (!element || hasStarted.current) return;
+
+    // reduced-motion:跳过打字,标题完整显示并立即发完成信号。
+    // setState 挪到 rAF 回调里触发(而不是效果体内直接调用),避免 cascading render 告警;
+    // 单帧(~16ms)延迟在打字动效的时间预算里可忽略不计。
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      hasStarted.current = true;
+      const raf = requestAnimationFrame(() => {
+        setDisplayedPath(path);
+        setDisplayedUser(user);
+        setDisplayedCommand(command);
+        setIsTypingComplete(true);
+        onCompleteRef.current?.();
+      });
+      return () => cancelAnimationFrame(raf);
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -51,7 +74,7 @@ function TypewriterTitle({
     const fullText = `${path} ${user} ${command}`;
     let index = 0;
     let lastTime = 0;
-    const interval = 40; // Slightly faster for better feel
+    const interval = 30; // ~30ms/字符,全站统一的会话节奏
 
     const animate = (timestamp: number) => {
       if (!lastTime) lastTime = timestamp;
@@ -80,6 +103,7 @@ function TypewriterTitle({
 
         if (index >= fullText.length) {
           setIsTypingComplete(true);
+          onCompleteRef.current?.();
           return;
         }
       }
