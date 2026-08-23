@@ -21,7 +21,7 @@ export default function Projects() {
         />
 
         {/* Project Cards */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem" }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <ProjectCard
             revealed={entered}
             motionReady={motionReady}
@@ -42,6 +42,15 @@ export default function Projects() {
             filename="redactflow.exe"
             imageUrl="https://media.haroldguo.com/redactflow.png"
             link="https://redactflow-preview.up.railway.app/"
+          />
+          <ProjectCard
+            title="Excalidrawer"
+            description={t("excalidrawer.description")}
+            tags={["CLI", "MCP", "Dev Tool"]}
+            filename="excalidrawer.exe"
+            videoUrl="https://media.haroldguo.com/excalidrawer_1080.mp4"
+            videoUrl720p="https://media.haroldguo.com/excalidrawer_720.mp4"
+            link="https://github.com/guohaonan-shy/excalidrawer"
           />
         </div>
       </div>
