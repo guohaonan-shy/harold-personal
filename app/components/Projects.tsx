@@ -11,7 +11,7 @@ export default function Projects() {
 
   return (
     <section className="bg-gradient-section border-t border-light">
-      <div className="mx-auto px-8 lg:px-16 py-16" style={{ maxWidth: "1440px" }}>
+      <div className="mx-auto px-8 lg:px-16 py-16" style={{ maxWidth: "1600px" }}>
         {/* Section Title */}
         <TypewriterTitle
           path="~/projects"
@@ -38,7 +38,7 @@ export default function Projects() {
             motionReady={motionReady}
             title="RedActFlow"
             description={t("redactflow.description")}
-            tags={["AI", "PDF", "Productivity", "Open Beta"]}
+            tags={["AI", "PDF", "Productivity"]}
             filename="redactflow.exe"
             imageUrl="https://media.haroldguo.com/redactflow.png"
             link="https://redactflow-preview.up.railway.app/"
