@@ -9,6 +9,13 @@ const eslintConfig = [
       "out/**",
       "app/generated/**",
       "next-env.d.ts",
+      // Nested git worktrees (created under .claude/worktrees/ by the
+      // EnterWorktree tool) are separate checkouts, not this codebase's
+      // lint surface — without this, whichever worktree happens to exist
+      // on disk gets scanned too, and its file paths won't match the
+      // path-scoped overrides below (e.g. the warn-tier override), so its
+      // copy of e.g. ProjectCard.tsx gets flagged at full "error" severity.
+      ".claude/worktrees/**",
     ],
   },
   ...coreWebVitals,
