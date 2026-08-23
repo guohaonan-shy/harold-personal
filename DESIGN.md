@@ -194,6 +194,37 @@ Nav tab 用路径式命名(`~/work`、`~/blog`、`~/about`)而不是普通词汇
 | 打字机效果 | `TypewriterTitle.tsx` |
 | CRT scanline | `10s linear infinite`,叠加在媒体容器上 |
 
+### Hero boot 分镜(`useHeroBoot.ts`)
+
+首屏专属的一次性编排,`html[data-boot]` 门控 + rAF 驱动的 cue 表,桌面基准(ms),键序即时间序:
+
+| cue | 时刻 | 内容 |
+|---|---|---|
+| (打字开始) | 0 | 徽章行 `init --workspace` 逐字打出,`30ms`/字符(全场唯一逐字打字) |
+| `h1Line1` | 400 | H1 第一行整行回显 |
+| `h1Cursor` | 500 | 光标从徽章行跳到 H1 尾部 |
+| `h1Line2` | 500 | H1 第二行回显(与第一行 stagger 100ms) |
+| `subtitle` | 640 | 副标题开始字符解密(`DecryptedText`) |
+| `subtitleCursor` | 710 | 光标交接到副标题尾部 |
+| `description` | 720 | 描述段 fade-in |
+| `cardChrome` | 800 | ASCII 头像卡 chrome 头先现 |
+| `cardBody` | 950 | 卡片内容淡入;同一槽位触发 WebGL 字符场的 settle 动画,不另起时机 |
+| `done` | 1400 | 编排完成,光标退场,徽章行绿点常驻脉冲 |
+
+- 移动端(`pointer: coarse`)整体乘 `0.8/1.4 ≈ 0.57` 压缩到约 0.8s,cue 表本身不用按档位改写。
+- `prefers-reduced-motion: reduce` 或无 JS 时不走这套编排,直接呈现终态(`data-boot` 不置位)。
+- 打字速率 `30ms`/字符是"收在 0–500ms 窗口内"优先于"贴近 35ms 观感速率"的取舍(16 字符 × 35ms 会超出窗口)——新场景若也要逐字打字,同样按目标窗口反推速率,不要孤立地复用 30ms 这个数字。
+- 首帧到 hydration 之间用一个 2.5s 的兜底 `setTimeout` 移除 `data-boot`(fail-open):这是韧性机制,不是动效数值,新组件不需要照抄,但改动这套编排时时长预算要留在 2.5s 内。
+
+### Section 入场语法(`useSectionEntrance.ts`)
+
+Hero 之外所有 section 共用的入场门控,三态模型:
+
+- **ssr**:未水合 / 无 JS / reduced-motion——内容用 `boot-hide` 隐藏,SSR HTML 里本来就可见(避免无 JS 访客永远看不到内容)。
+- **gated**:已水合,该 section 自己的 `TypewriterTitle` prompt 还没打完——无条件隐藏,在绘制前用 `useLayoutEffect` 接管,不闪现。
+- **entered**:prompt 打完(`onPromptDone` 回调)——挂 `animate-fadeIn` 播放入场;reduced-motion 不进这个分支,直接就位。
+- 每个 section 用自己的 prompt 行(如 `~/projects --list`、`~/repos ls --starred`)当入场触发器,不共享 Hero 的 boot cue 表,也不各自 `whileInView`——这是本 PR 统一之前"各卡片各自触发"的不一致状态后定下的规则,新 section 沿用同一模式。
+
 ## Do's and Don'ts
 
 ### Do
@@ -230,5 +261,4 @@ Nav tab 用路径式命名(`~/work`、`~/blog`、`~/about`)而不是普通词汇
 - **Projects 网格没有移动端降级规则**——桌面端固定两栏(`1fr 1fr`),移动端如何降级(单栏?保持两栏挤压?)还没有明确定义,目前靠浏览器默认行为。
 - **表单 / 语义色**:目前没有任何表单输入或校验场景,Semantic 色板是空的。如果以后加联系表单或订阅功能,需要先在这里定义,而不是复用 terminal-red/yellow。
 - **组件库还很薄**:目前只有 Terminal Chrome、Card、三种按钮/徽章、Prompt Line 几个反复出现的模式被记录下来。项目详情页的 A/B/C 视觉概念(见下)、更复杂的表单/弹层/空状态组件都还没有先例,遇到时按这份文件的既有规则推导,并把推导结果写回这里。
-- **Hero 头像的 ASCII 化呈现**——预计构建期预生成字符矩阵,亮色主题下需要单独处理对比度,尚未定稿。
 - **项目详情页的最终视觉概念**——本轮内容管线只搭了"终端 header + prose 正文"的默认壳,A/B/C 概念(命令式导览 / 分屏 README 阅读器 / 轻量版)还没有选定。
