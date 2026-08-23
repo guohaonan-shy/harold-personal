@@ -44,6 +44,8 @@ export default function Projects() {
             link="https://redactflow-preview.up.railway.app/"
           />
           <ProjectCard
+            revealed={entered}
+            motionReady={motionReady}
             title="Excalidrawer"
             description={t("excalidrawer.description")}
             tags={["CLI", "MCP", "Dev Tool"]}
