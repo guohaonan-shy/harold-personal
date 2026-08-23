@@ -201,8 +201,22 @@ export default function ProjectCard({
 
       {/* Info Section */}
       <div className="p-6 border-t border-main" style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
-        <div className="flex items-center justify-between gap-3" style={{ minHeight: "2.25rem" }}>
-          <h3 className="text-2xl font-mono font-bold text-main leading-none tracking-tight">{title}</h3>
+        <div className="flex items-center gap-3" style={{ minHeight: "2.25rem" }}>
+          <h3 className="text-2xl font-mono font-bold text-main leading-none tracking-tight shrink-0">{title}</h3>
+          {/* hover 时让位给「访问项目」链接——同框会挤到溢出(link 需要 ~150px,
+              标签行常只剩个位数像素可用),两者互斥显示而非硬塞同一行 */}
+          {!isHovered && (
+            <div className="flex items-center gap-2">
+              {tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-3 py-1.5 rounded-md bg-main/5 border border-main/20 text-xs font-bold text-main/80 uppercase tracking-widest whitespace-nowrap"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
           {link && (
             <AnimatePresence>
               {isHovered && (
@@ -223,16 +237,6 @@ export default function ProjectCard({
               )}
             </AnimatePresence>
           )}
-        </div>
-        <div className="flex items-center gap-2 flex-wrap">
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="px-3 py-1.5 rounded-md bg-main/5 border border-main/20 text-xs font-bold text-main/80 uppercase tracking-widest"
-            >
-              {tag}
-            </span>
-          ))}
         </div>
         <p className="text-sm text-dim leading-[1.6]">{description}</p>
       </div>
